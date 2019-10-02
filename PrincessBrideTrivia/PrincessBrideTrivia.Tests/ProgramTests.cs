@@ -73,6 +73,7 @@ namespace PrincessBrideTrivia.Tests
         }
 
 
+
         private static void GenerateQuestionsFile(string filePath, int numberOfQuestions)
         {
             for (int i = 0; i < numberOfQuestions; i++)
@@ -86,5 +87,31 @@ namespace PrincessBrideTrivia.Tests
                 File.AppendAllLines(filePath, lines);
             }
         }
+        [TestMethod]
+        public void NoNullElementsInQuestionArray_WhenGeneratingQuestionsFromFile()
+        {
+            string filePath = Path.GetRandomFileName();
+            try
+            {
+                // Arrange
+                GenerateQuestionsFile(filePath, 2);
+
+                // Act
+                Question[] questions = Program.LoadQuestions(filePath);
+
+                // Assert 
+                foreach (Question aQuestion in questions) {
+                    Assert.IsTrue(aQuestion != null,"The \"question\" array has null \"questions\".");
+                }
+               
+            }
+            finally
+            {
+                File.Delete(filePath);
+            }
+        }
+
+       
+
     }
 }
