@@ -134,7 +134,7 @@ namespace PrincessBrideTrivia
 
                     usedAnswerIndexes[newIndexForAnswer] = true;
 
-                    if (x == (Int32.Parse(originalCorrectAnswerIndex) - 1) && !correctAnswerPlaced)
+                    if (!correctAnswerPlaced && x == (Int32.Parse(originalCorrectAnswerIndex) - 1) )
                     {
                         originalCorrectAnswerIndex = (newIndexForAnswer + 1).ToString();
 
