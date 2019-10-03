@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
+using System.Text;
 
 namespace PrincessBrideTrivia.Tests
 {
@@ -84,6 +85,50 @@ namespace PrincessBrideTrivia.Tests
                 lines[3] = "Answer 3";
                 lines[4] = "2";
                 File.AppendAllLines(filePath, lines);
+            }
+        }
+
+        [TestMethod]
+        public void QuestionAnswerOrderIsRandom()
+
+        {
+            string filePath = Path.GetRandomFileName();
+            try
+            {
+                // Arrange
+                GenerateQuestionsFile(filePath, 2);
+
+                // Act
+
+
+                Question[] questionsA = Program.LoadQuestionsRandomAnswerOrder(filePath);
+                Question[] questionsB = Program.LoadQuestionsRandomAnswerOrder(filePath);
+
+                //Question[] questionsA = Program.LoadQuestions(filePath);
+                //Question[] questionsB = Program.LoadQuestions(filePath);
+
+
+
+                StringBuilder allAnswersfromQuestionsA = new StringBuilder();
+                StringBuilder allAnswersfromQuestionsB = new StringBuilder();
+
+                foreach (Question qA in questionsA)
+                {
+                    allAnswersfromQuestionsA.Append(string.Concat(qA.Answers));
+                }
+                foreach (Question qB in questionsB)
+                {
+                    allAnswersfromQuestionsB.Append(string.Concat(qB.Answers));
+                }
+
+                // Assert 
+                Assert.IsFalse(string.Equals(allAnswersfromQuestionsA.ToString(), allAnswersfromQuestionsB.ToString()), "Question Answers are not random.");
+
+
+            }
+            finally
+            {
+                File.Delete(filePath);
             }
         }
     }
