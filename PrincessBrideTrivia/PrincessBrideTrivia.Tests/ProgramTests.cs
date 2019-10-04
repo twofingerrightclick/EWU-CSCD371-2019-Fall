@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.IO;
 using System.Text;
 
@@ -85,6 +86,54 @@ namespace PrincessBrideTrivia.Tests
                 lines[3] = "Answer 3";
                 lines[4] = "2";
                 File.AppendAllLines(filePath, lines);
+            }
+        }
+
+        public string [] getCorrectAnswersAsStrings(Question [] questions, int numberOfQuestions)
+
+        {
+            string[] correctAnswers = new string[numberOfQuestions];
+            for (int x = 0; x < numberOfQuestions; x++)
+            {
+                Question q = questions[x];
+                int correctAnswerIndex = (Int32.Parse(q.CorrectAnswerIndex)) - 1;
+                correctAnswers[x] = q.Answers[correctAnswerIndex];
+            }
+            return correctAnswers;
+        }
+
+    [TestMethod]
+        public void CorrectAnswerIsMarkedCorrectlyAfterRandomAnswerOrder()
+
+        {
+            string filePath = Path.GetRandomFileName();
+            try
+            {
+                // Arrange
+                GenerateQuestionsFile(filePath, 2);
+                
+
+                // Act
+                Question[] questionsOriginal = Program.LoadQuestions(filePath);
+                int numberOfQuestions = questionsOriginal.Length;
+                string [] originalCorrectAnswerArray = getCorrectAnswersAsStrings(questionsOriginal,numberOfQuestions);
+
+                Question[] questionsRandomAnswer = Program.LoadQuestionsRandomAnswerOrder(filePath);
+                string[] randomCorrectAnswerArray = getCorrectAnswersAsStrings(questionsOriginal, numberOfQuestions);
+
+               
+
+                // Assert 
+                for (int x=0; x<numberOfQuestions;x++)
+                {
+                    Assert.IsTrue(string.Equals(randomCorrectAnswerArray[x], originalCorrectAnswerArray[x]), "correct answers are not marked correctly");
+                }
+
+
+            }
+            finally
+            {
+                File.Delete(filePath);
             }
         }
 
