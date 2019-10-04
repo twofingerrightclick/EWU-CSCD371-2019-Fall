@@ -144,7 +144,6 @@ namespace PrincessBrideTrivia
 
                 }
 
-
                 question.CorrectAnswerIndex = originalCorrectAnswerIndex;
 
                 questions[i] = question;
