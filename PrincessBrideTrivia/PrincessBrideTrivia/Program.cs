@@ -10,8 +10,7 @@ namespace PrincessBrideTrivia
         {
             string filePath = GetFilePath();
             //Question[] questions = LoadQuestions(filePath);
-            Question[] questions = LoadQuestions(filePath);
-            questions = RandomAnswerOrder(questions);
+            Question [] questions = RandomAnswerOrder(filePath);
 
             int numberCorrect = 0;
             for (int i = 0; i < questions.Length; i++)
@@ -97,50 +96,20 @@ namespace PrincessBrideTrivia
             return questions;
         }
 
-        public static Question[] RandomAnswerOrder(Question [] questions)
+        public static Question[] RandomAnswerOrder(string filePath)
         {
-            
+            Question[] questions = LoadQuestions(filePath);
             Random random = new Random();
-            int numberofAnswersPerQuestion = questions[0].Answers.Length;
-
-
             
             foreach (Question q in questions)
             {
                 
                 string originalCorrectAnswerIndex = q.CorrectAnswerIndex;
+                string originalCorrectAnswer = q.Answers[int.Parse(q.CorrectAnswerIndex)-1];
 
-                bool[] usedAnswerIndexes = Enumerable.Repeat(false, numberofAnswersPerQuestion).ToArray();
-                bool correctAnswerPlaced = false;
-                string[] rearrangedAnswers = new string[numberofAnswersPerQuestion];
+                string[] rearrangedAnswers = q.Answers.OrderBy(x => random.Next()).ToArray();
 
-                for (int x = 0; x < numberofAnswersPerQuestion; x++)
-                {
-
-                    int newIndexForAnswer = random.Next(0, numberofAnswersPerQuestion);
-
-                    string answer = q.Answers[x];
-
-                    while (usedAnswerIndexes[newIndexForAnswer] == true)
-                    {
-                        newIndexForAnswer = random.Next(0, numberofAnswersPerQuestion);
-                    }
-
-                    rearrangedAnswers[newIndexForAnswer] = answer;
-
-                    usedAnswerIndexes[newIndexForAnswer] = true;
-
-                    if (!correctAnswerPlaced && x == (int.Parse(originalCorrectAnswerIndex) - 1))
-                    {
-                        originalCorrectAnswerIndex = (newIndexForAnswer + 1).ToString();
-
-                        correctAnswerPlaced = true;
-
-                    }
-
-                }
-
-                q.CorrectAnswerIndex = originalCorrectAnswerIndex;
+                q.CorrectAnswerIndex = (Array.IndexOf(rearrangedAnswers, originalCorrectAnswer)+1).ToString();
 
                 q.Answers=rearrangedAnswers;
 

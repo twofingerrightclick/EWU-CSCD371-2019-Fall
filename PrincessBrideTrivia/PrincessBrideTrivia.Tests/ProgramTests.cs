@@ -118,7 +118,7 @@ namespace PrincessBrideTrivia.Tests
                 int numberOfQuestions = questionsOriginal.Length;
                 string [] originalCorrectAnswerArray = getCorrectAnswersAsStrings(questionsOriginal,numberOfQuestions);
 
-                Question[] questionsRandomAnswer = Program.RandomAnswerOrder(Program.LoadQuestions(filePath));
+                Question[] questionsRandomAnswer = Program.RandomAnswerOrder(filePath);
                 string[] randomCorrectAnswerArray = getCorrectAnswersAsStrings(questionsOriginal, numberOfQuestions);
 
                
@@ -150,7 +150,7 @@ namespace PrincessBrideTrivia.Tests
                 // Act
 
 
-                Question[] questionsA = Program.RandomAnswerOrder(Program.LoadQuestions(filePath));
+                Question[] questionsA = Program.RandomAnswerOrder(filePath);
                 Question[] questionsB = Program.LoadQuestions(filePath);
 
                 //Question[] questionsA = Program.LoadQuestions(filePath);
