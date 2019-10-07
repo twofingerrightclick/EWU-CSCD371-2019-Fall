@@ -10,7 +10,8 @@ namespace PrincessBrideTrivia
         {
             string filePath = GetFilePath();
             //Question[] questions = LoadQuestions(filePath);
-            Question[] questions = LoadQuestionsRandomAnswerOrder(filePath);
+            Question[] questions = LoadQuestions(filePath);
+            questions = RandomAnswerOrder(questions);
 
             int numberCorrect = 0;
             for (int i = 0; i < questions.Length; i++)
@@ -96,46 +97,40 @@ namespace PrincessBrideTrivia
             return questions;
         }
 
-        public static Question[] LoadQuestionsRandomAnswerOrder(string filePath)
+        public static Question[] RandomAnswerOrder(Question [] questions)
         {
-            string[] lines = File.ReadAllLines(filePath);
+            
             Random random = new Random();
-            int numberofAnswersPerQuestion = 3;
+            int numberofAnswersPerQuestion = questions[0].Answers.Length;
 
 
-            Question[] questions = new Question[lines.Length / 5];
-            for (int i = 0; i < questions.Length; i++)
+            
+            foreach (Question q in questions)
             {
-                Question question = new Question();
-
-                int lineIndex = i * 5;
-                string questionText = lines[lineIndex];
-                question.Text = questionText;
-                question.Answers = new string[3];
-                string originalCorrectAnswerIndex = lines[lineIndex + 4];
-
+                
+                string originalCorrectAnswerIndex = q.CorrectAnswerIndex;
 
                 bool[] usedAnswerIndexes = Enumerable.Repeat(false, numberofAnswersPerQuestion).ToArray();
                 bool correctAnswerPlaced = false;
+                string[] rearrangedAnswers = new string[numberofAnswersPerQuestion];
 
                 for (int x = 0; x < numberofAnswersPerQuestion; x++)
                 {
 
                     int newIndexForAnswer = random.Next(0, numberofAnswersPerQuestion);
 
-                    string answer = lines[lineIndex + x + 1];
-
+                    string answer = q.Answers[x];
 
                     while (usedAnswerIndexes[newIndexForAnswer] == true)
                     {
                         newIndexForAnswer = random.Next(0, numberofAnswersPerQuestion);
                     }
 
-                    question.Answers[newIndexForAnswer] = answer;
+                    rearrangedAnswers[newIndexForAnswer] = answer;
 
                     usedAnswerIndexes[newIndexForAnswer] = true;
 
-                    if (!correctAnswerPlaced && x == (Int32.Parse(originalCorrectAnswerIndex) - 1) )
+                    if (!correctAnswerPlaced && x == (int.Parse(originalCorrectAnswerIndex) - 1))
                     {
                         originalCorrectAnswerIndex = (newIndexForAnswer + 1).ToString();
 
@@ -145,13 +140,15 @@ namespace PrincessBrideTrivia
 
                 }
 
-                question.CorrectAnswerIndex = originalCorrectAnswerIndex;
+                q.CorrectAnswerIndex = originalCorrectAnswerIndex;
 
-                questions[i] = question;
+                q.Answers=rearrangedAnswers;
 
             }
             return questions;
         }
+
+        
 
 
     }

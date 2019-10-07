@@ -118,7 +118,7 @@ namespace PrincessBrideTrivia.Tests
                 int numberOfQuestions = questionsOriginal.Length;
                 string [] originalCorrectAnswerArray = getCorrectAnswersAsStrings(questionsOriginal,numberOfQuestions);
 
-                Question[] questionsRandomAnswer = Program.LoadQuestionsRandomAnswerOrder(filePath);
+                Question[] questionsRandomAnswer = Program.RandomAnswerOrder(Program.LoadQuestions(filePath));
                 string[] randomCorrectAnswerArray = getCorrectAnswersAsStrings(questionsOriginal, numberOfQuestions);
 
                
@@ -150,8 +150,8 @@ namespace PrincessBrideTrivia.Tests
                 // Act
 
 
-                Question[] questionsA = Program.LoadQuestionsRandomAnswerOrder(filePath);
-                Question[] questionsB = Program.LoadQuestionsRandomAnswerOrder(filePath);
+                Question[] questionsA = Program.RandomAnswerOrder(Program.LoadQuestions(filePath));
+                Question[] questionsB = Program.LoadQuestions(filePath);
 
                 //Question[] questionsA = Program.LoadQuestions(filePath);
                 //Question[] questionsB = Program.LoadQuestions(filePath);
@@ -171,6 +171,7 @@ namespace PrincessBrideTrivia.Tests
                 }
 
                 // Assert 
+                // compares all answers because small chance of many being the same order. An analytical test on difference would be more appropriate. 
                 Assert.IsFalse(string.Equals(allAnswersfromQuestionsA.ToString(), allAnswersfromQuestionsB.ToString()), "Question Answers are not random.");
 
 
