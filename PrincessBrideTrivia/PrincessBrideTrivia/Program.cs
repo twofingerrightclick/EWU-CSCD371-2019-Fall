@@ -104,7 +104,6 @@ namespace PrincessBrideTrivia
             foreach (Question q in questions)
             {
                 
-                string originalCorrectAnswerIndex = q.CorrectAnswerIndex;
                 string originalCorrectAnswer = q.Answers[int.Parse(q.CorrectAnswerIndex)-1];
 
                 string[] rearrangedAnswers = q.Answers.OrderBy(x => random.Next()).ToArray();
