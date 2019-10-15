@@ -13,9 +13,9 @@ namespace Logger.Tests
         public void Error_WithNullLogger_ThrowsException()
         {
             // Arrange
-            string[] args= new string[0];
+          
             // Act
-            BaseLoggerMixins.Error(null, "message", args );
+            BaseLoggerMixins.Error(null , "message" );
 
             // Assert
         }
@@ -25,11 +25,11 @@ namespace Logger.Tests
         public void Error_Extension_Works()
         {
             string tempPath = Path.GetRandomFileName();
-            string[] args = new string[0];
+            
             // Arrange
             var logger = new FileLogger(tempPath);
             // Act
-            BaseLoggerMixins.Error(logger, "message", args);
+            BaseLoggerMixins.Error(logger , "message");
 
             // Assert
             File.Delete(tempPath);
