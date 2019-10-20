@@ -22,5 +22,6 @@ namespace Inheritance
         {
             writer.WriteLine(item.PrintInfo());
         }
+
     }
 }

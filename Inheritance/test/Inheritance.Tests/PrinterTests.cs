@@ -34,9 +34,41 @@ namespace Inheritance.Tests
                 }
             }
         }
+
+        [TestMethod]
+        public void TelevisionGetsPrinted()
+        {
+            // Arrange
+            var item = new Televison { Manufacturer = "Sony", Size="67\""};
+
+            using (var stream = new MemoryStream())
+            {
+                using (var writer = new StreamWriter(stream))
+                {
+                    // Act
+                    Printer.Print(item, writer);
+                    writer.Flush();
+
+                    stream.Position = 0;
+                    stream.Seek(0, SeekOrigin.Begin);
+
+                    // Assert
+                    using (var reader = new StreamReader(stream))
+                    {
+                        var lineWritten = reader.ReadLine();
+                        Assert.AreEqual("Sony - 67\"", lineWritten);
+                    }
+                }
+            }
+        }
     }
 
     public class TestItem : Item {
         public string Name { get; set; }
+
+        public override string PrintInfo()
+        {
+            return Name;
+        }
     }
 }
