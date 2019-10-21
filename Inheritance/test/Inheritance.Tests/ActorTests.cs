@@ -11,27 +11,24 @@ namespace Inheritance.Tests
         public void Actor_Penny_Speaks()
         {
             // Arrange
-            Actor item = new Penny {};
+            Actor actor = new Penny {};
 
-            using (var stream = new MemoryStream())
-            {
-                using (var writer = new StreamWriter(stream))
-                {
-                    // Act
-                    ((Penny)item).Speak(writer);
-                    writer.Flush();
+            string lineWritten = writerHelper(actor);
+            Assert.AreEqual(((Penny)actor).Name + " says \"Who do we love?\"", lineWritten);
+                
+        }
 
-                    stream.Position = 0;
-                    stream.Seek(0, SeekOrigin.Begin);
 
-                    // Assert
-                    using (var reader = new StreamReader(stream))
-                    {
-                        var lineWritten = reader.ReadLine();
-                        Assert.AreEqual("helo", lineWritten);
-                    }
-                }
-            }
+        [TestMethod]
+
+        public void Actor_Sheldon_Speaks()
+        {
+            // Arrange
+            Actor actor = new Sheldon { };
+
+            string lineWritten = writerHelper(actor);
+            Assert.AreEqual(((Sheldon)actor).Name + " says \"I'll be back before this banana hits the ground.\"", lineWritten);
+
         }
 
 
@@ -42,25 +39,10 @@ namespace Inheritance.Tests
             // Arrange
             Actor actor = new Raj {};
 
-            using (var stream = new MemoryStream())
-            {
-                using (var writer = new StreamWriter(stream))
-                {
-                    // Act
-                    actor.Speak(writer);
-                    writer.Flush();
-
-                    stream.Position = 0;
-                    stream.Seek(0, SeekOrigin.Begin);
-
-                    // Assert
-                    using (var reader = new StreamReader(stream))
-                    {
-                        var lineWritten = reader.ReadLine();
-                        Assert.AreNotEqual("Raj mumbles", lineWritten);
-                    }
-                }
-            }
+            string lineWritten = writerHelper(actor);
+            Assert.AreEqual(((Raj)actor).Name + " says \"I'm sorry I'm so late. I was on the phone with my mother.\"", lineWritten);
+           
+               
         }
 
         [TestMethod]
@@ -70,6 +52,18 @@ namespace Inheritance.Tests
             // Arrange
             Actor actor = new Raj {WomenPresent=true};
 
+            string lineWritten = writerHelper(actor);
+            
+            Assert.AreEqual("Raj mumbles", lineWritten);
+                    
+                
+            
+        }
+
+        public string writerHelper(Actor actor)
+        {
+            string lineWritten;
+
             using (var stream = new MemoryStream())
             {
                 using (var writer = new StreamWriter(stream))
@@ -82,13 +76,15 @@ namespace Inheritance.Tests
                     stream.Seek(0, SeekOrigin.Begin);
 
                     // Assert
+
                     using (var reader = new StreamReader(stream))
                     {
-                        var lineWritten = reader.ReadLine();
-                        Assert.AreEqual("Raj mumbles", lineWritten);
+                        lineWritten = reader.ReadLine();
+                        
                     }
                 }
             }
+            return lineWritten;
         }
     }
 }
