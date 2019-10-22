@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.IO;
 
 namespace Inheritance.Tests
@@ -6,6 +7,20 @@ namespace Inheritance.Tests
     [TestClass]
     public class ActorTests
     {
+
+        [TestMethod]
+        [ExpectedException(typeof (ArgumentNullException))]
+        public void Actor_Speak_handles_null()
+        {
+            // Arrange
+            Actor actor=null;
+
+            string lineWritten = writerHelper(actor);
+            
+
+        }
+
+
         [TestMethod]
 
         public void Actor_Penny_Speaks()
@@ -30,6 +45,7 @@ namespace Inheritance.Tests
             Assert.AreEqual(((Sheldon)actor).Name + " says \"I'll be back before this banana hits the ground.\"", lineWritten);
 
         }
+
 
 
         [TestMethod]
