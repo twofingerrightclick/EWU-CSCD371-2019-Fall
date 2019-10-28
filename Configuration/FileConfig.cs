@@ -10,8 +10,17 @@ namespace Configuration
         public bool GetConfigValue(string name, out string? value)
         {
             value = null;
-            int lineCount = 0;
+            int lineCount;
+            bool entryFound = SearchAndRetreiveValue(name, ref value, out lineCount);
+
+            return entryFound;
+        }
+
+        private bool SearchAndRetreiveValue(string name, ref string value, out int lineIndex)
+        {
             bool entryFound = false;
+            lineIndex = 0;
+
             using (StreamReader reader = new StreamReader(FilePath))
             {
                 string currentLine;
@@ -20,7 +29,7 @@ namespace Configuration
 
                     string[] currentEntry = ParseConfigEntry(currentLine);
 
-                    Console.WriteLine("line: " + lineCount + " - " + currentEntry[0]+" value: " + currentEntry[1]);
+                    Console.WriteLine("line: " + lineIndex + " - " + currentEntry[0] + " value: " + currentEntry[1]);
 
                     if (string.Equals(currentEntry[0], name))
                     {
@@ -30,14 +39,13 @@ namespace Configuration
                     }
                     else
                     {
-                        lineCount++;
+                        lineIndex++;
                     }
 
                 }
 
 
             }
-
             return entryFound;
         }
 
@@ -80,32 +88,12 @@ namespace Configuration
 
             int lineCount = 0;
             bool entryFound = false;
+            string? originalValue = value;
 
             if (File.Exists(FilePath))
             {
-                using (StreamReader reader = new StreamReader(FilePath))
-                {
-                    string currentLine;
-                    while ((currentLine = reader.ReadLine()) != null && !entryFound)
-                    {
-
-                        string [] currentEntry = ParseConfigEntry(currentLine);
-                        Console.WriteLine("set entry name: " + currentEntry[0]);
-                        if (string.Equals(currentEntry[0], name))
-                        {
-                            Console.WriteLine("found entry: "+currentEntry[0]);
-                            entryFound = true;
-
-                        }
-
-                        else
-                        {
-                            lineCount++;
-                        }
-
-                    }
-
-                }
+              
+                entryFound = SearchAndRetreiveValue(name, ref originalValue, out lineCount);
             }
 
             if (value == null)
