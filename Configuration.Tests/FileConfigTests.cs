@@ -31,6 +31,29 @@ namespace Configuration.Tests
 
         }
 
+        [DataTestMethod]
+        [DataRow("name", "value1")]
+        [DataRow("name", "value2")]
+        [DataRow("name", "value3")]
+        public void Set_Variable_Correctly_Appends_To_File(string variable, string value)
+        {
+            var fileConfiger = new FileConfig();
+            fileConfiger.SetConfigValue(variable, value);
+            Assert.IsTrue(fileConfiger.GetConfigValue(variable, value));
+        }
+
+
+        [DataTestMethod]
+        [DataRow("name", "value1")]
+ 
+        public void Config_File_Entry_Correctly_Parsed(string variable, string value)
+        {
+            var fileConfiger = new FileConfig();
+            fileConfiger.SetConfigValue(variable, value);
+            Assert.IsTrue(fileConfiger.GetConfigValue(variable, value));
+        }
+
+
 
     }
 
