@@ -8,12 +8,12 @@ namespace Configuration.Tests
     public class FileConfigTests
     {
         [DataTestMethod]
-        [DataRow("cant have spaces in name", "value")]
-        [DataRow("CantHave=inName", "hello")]
-        [DataRow("CantHaveEqualsinValue", "hello=")]
+        [DataRow("cant have spaces in name", "spacesinName")]
+        [DataRow("CantHave=inName", "equalsInName")]
+        [DataRow("CantHaveEqualsinValue", "Equals=")]
         [DataRow("", "noEmptyNameString")]
         [DataRow("noEmptyValueString", "")]
-        //[DataRow("Can't have =", "hello")]
+        
         [ExpectedException(typeof(ArgumentException))]
         public void Set_Environment_Variable_Variable_Must_Be_Valid_Format(string variable, string value)
         {
@@ -40,7 +40,7 @@ namespace Configuration.Tests
         {
             var fileConfiger = new FileConfig();
             fileConfiger.SetConfigValue(variable, value);
-            Assert.IsTrue(fileConfiger.GetConfigValue(variable, value));
+            Assert.IsTrue(fileConfiger.GetConfigValue(variable, out value));
         }
 
 
@@ -93,8 +93,8 @@ namespace Configuration.Tests
 
                 fileConfiger.SetConfigValue(name, value);
 
-                Assert.IsTrue(fileConfiger.GetConfigValue(name, value));
-                Assert.IsFalse(fileConfiger.GetConfigValue("thisEntryWasntSet", value));
+                Assert.IsTrue(fileConfiger.GetConfigValue(name, out value));
+                Assert.IsFalse(fileConfiger.GetConfigValue("thisEntryWasntSet", out value));
 
             }
 

@@ -5,10 +5,11 @@ namespace Configuration
     public class EnvironmentConfig : IConfig
     {
 
-        public bool GetConfigValue(string name, string? value)
+        public bool GetConfigValue(string name, out string? value)
         {
 
             value = Environment.GetEnvironmentVariable(name);
+            
             return (value != null);
 
         }
@@ -20,15 +21,7 @@ namespace Configuration
             return true;
         }
 
-        //cheap method to get actual value
-        public string GetConfigValue(string name, ref string? value)
-        {
-            value = Environment.GetEnvironmentVariable(name);
 
-            return value;
-
-
-        }
 
     }
 }

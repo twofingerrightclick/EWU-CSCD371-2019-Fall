@@ -9,19 +9,21 @@ namespace Configuration.Tests
         [TestMethod]
         public void Set_Environment_Variable()
         {
+            string defaultString = default;
             var environmentConfiger = new EnvironmentConfig();
             environmentConfiger.SetConfigValue("test1", "a");
-            Assert.IsTrue(environmentConfiger.GetConfigValue("test1", null));
+            Assert.IsTrue(environmentConfiger.GetConfigValue("test1", out defaultString));
         }
 
         [TestMethod]
         public void Clear_Config_Value()
         {
+            string defaultString = default;
             var environmentConfiger = new EnvironmentConfig();
             environmentConfiger.SetConfigValue("test1", "a");
             environmentConfiger.SetConfigValue("test1", null);
 
-            Assert.IsFalse(environmentConfiger.GetConfigValue("test1", null));
+            Assert.IsFalse(environmentConfiger.GetConfigValue("test1", out defaultString));
 
         }
 
