@@ -60,8 +60,9 @@ namespace Configuration
         public void editConfigEntry(string newEntry, int lineToEdit)
         {
             string[] arrLine = File.ReadAllLines(FilePath);
-            arrLine[lineToEdit - 1] = newEntry;
+            arrLine[lineToEdit] = newEntry;
             File.WriteAllLines(FilePath, arrLine);
+           
 
         }
 
@@ -72,46 +73,44 @@ namespace Configuration
 
             CheckValidInput(name, value);
 
-            int lineCount = 0;
-            bool entryFound = false;
-
-            using (StreamWriter writer = new StreamWriter(FilePath, append: true))
-            {
-                using (StreamReader reader = new StreamReader(FilePath))
-                {
-
-                    while (!reader.EndOfStream)
-                    {
-                        string currentEntry = reader.ReadLine();
-                        string currentEntryName = ParseConfigEntry(currentEntry)[0];
-                        if (currentEntryName == name)
-                        {
-                            entryFound = true;
-                            break;
-                        }
-                        lineCount++;
-
-                    }
-
-                    if (value == null)
-                    {
-                        value = "not set";
-                    }
-
-                    string newEntry = string.Format("<{0}={1}>", name, value);
+            //int lineCount = 0;
+            //bool entryFound = false;
 
 
-                    if (entryFound)
-                    {
-                        editConfigEntry(newEntry, lineCount);
-                    }
-                    else
-                    {
-                        writer.WriteLine(newEntry);
-                    }
-                }
+            //using (StreamReader reader = new StreamReader(FilePath))
+            //{
+            //    string currentEntry;
+            //    while ((currentEntry = reader.ReadLine()) != null)
+            //    {
+                    
+            //        string currentEntryName = ParseConfigEntry(currentEntry)[0];
+            //        if (currentEntryName == name)
+            //        {
+            //            entryFound = true;
+            //            break;
+            //        }
 
-            }
+            //        lineCount++;
+
+            //    }
+
+            //}
+
+            //if (value == null)
+            //{
+            //    value = "";
+            //}
+
+            string newEntry = string.Format("<{0}={1}>", name, value);
+
+            //if (entryFound)
+            //{
+            //    editConfigEntry(newEntry, lineCount);
+            //}
+            //else
+            //{
+                File.AppendAllText(FilePath,newEntry);
+            //}
             return true;
         }
 
