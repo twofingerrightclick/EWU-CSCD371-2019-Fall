@@ -30,7 +30,7 @@ namespace Configuration.Tests
         public void Throws_Exception_If_VariableName_Is_Empty()
         {
             var environmentConfiger = new EnvironmentConfig();
-            environmentConfiger.SetConfigValue(null, "a");
+            environmentConfiger.SetConfigValue(null!, "a");
 
         }
     }

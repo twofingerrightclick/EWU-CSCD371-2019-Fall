@@ -33,8 +33,17 @@ namespace Configuration
             return entryFound;
         }
 
+#pragma warning disable CA1822 // Mark members as static
         public string[] ParseConfigEntry(string configEntry)
+#pragma warning restore CA1822 // Mark members as static
         {
+            if (string.IsNullOrEmpty(configEntry))
+            {
+#pragma warning disable CA1303 // Do not pass literals as localized parameters
+                throw new ArgumentException("entry was null", nameof(configEntry));
+#pragma warning restore CA1303 // Do not pass literals as localized parameters
+            }
+
             char[] splitOn = { '<', '>','=' };
             
             string[] parsedEntry = configEntry.Split(splitOn, StringSplitOptions.RemoveEmptyEntries);
