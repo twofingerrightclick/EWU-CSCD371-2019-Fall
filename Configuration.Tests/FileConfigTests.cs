@@ -149,6 +149,46 @@ namespace Configuration.Tests
         }
 
 
+        [TestMethod]
+
+        public void Remove_Config_Entry_By_Setting_With_Null_Success_True()
+        {
+
+            string testFilePath = Environment.CurrentDirectory + Path.DirectorySeparatorChar + "fileTest.settings";
+
+            try
+            {
+                File.Delete(testFilePath);
+
+                var fileConfiger = new FileConfig();
+                fileConfiger.FilePath = testFilePath;
+
+                string name = "name";
+                string originalValue = "one";
+                
+
+
+
+                fileConfiger.SetConfigValue(name, originalValue);
+                fileConfiger.SetConfigValue(name, null);
+
+
+                string finalValue;
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+                Assert.IsFalse(fileConfiger.GetConfigValue(name, out finalValue));
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+
+
+
+            }
+
+            finally
+            {
+                File.Delete(testFilePath);
+            }
+        }
+
+
 
     }
 

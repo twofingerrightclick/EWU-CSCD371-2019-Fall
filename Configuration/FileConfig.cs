@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Configuration
@@ -76,13 +77,20 @@ namespace Configuration
             arrLine[lineToEdit] = newEntry;
             File.WriteAllLines(FilePath, arrLine);
 
-
         }
 
+        public void removeConfigEntry(int lineToEdit)
+        {
+            List<string> arrLine = new List<string>(File.ReadAllLines(FilePath));
+            arrLine.RemoveAt(lineToEdit);
+            File.WriteAllLines(FilePath, arrLine);
+
+        }
+        //If config variable doesn't exists, adds a Config Variable and Value. If it exists, changes it to new value, or removes it.
         public bool SetConfigValue(string name, string? value)
         {
 
-            //Console.WriteLine(FilePath);
+            
 
             CheckValidInput(name, value);
 
@@ -98,21 +106,25 @@ namespace Configuration
 
             if (value == null)
             {
-                value = "";
+                removeConfigEntry(lineCount);
             }
 
-            string newEntry = string.Format("<{0}={1}>", name, value);
-
-            if (entryFound)
-            {
-                editConfigEntry(newEntry, lineCount);
-            }
             else
             {
-                using (StreamWriter writer = new StreamWriter(FilePath, append: true))
-                {
-                    writer.WriteLine(newEntry);
 
+                string newEntry = string.Format("<{0}={1}>", name, value);
+
+                if (entryFound)
+                {
+                    editConfigEntry(newEntry, lineCount);
+                }
+                else
+                {
+                    using (StreamWriter writer = new StreamWriter(FilePath, append: true))
+                    {
+                        writer.WriteLine(newEntry);
+
+                    }
                 }
             }
             return true;
