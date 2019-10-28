@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.IO;
 
 namespace Configuration.Tests
 {
@@ -18,7 +19,7 @@ namespace Configuration.Tests
         {
             var fileConfiger = new FileConfig();
             fileConfiger.SetConfigValue(variable, value);
-            
+
         }
 
         [DataTestMethod]
@@ -44,13 +45,32 @@ namespace Configuration.Tests
 
 
         [DataTestMethod]
-        [DataRow("name", "value1")]
- 
-        public void Config_File_Entry_Correctly_Parsed(string variable, string value)
+        [DataRow("name", "test", "<name>=<value>")]
+
+        public void Config_File_Entry_Correctly_Parsed(string name, string value, string testEntry)
         {
-            var fileConfiger = new FileConfig();
-            fileConfiger.SetConfigValue(variable, value);
-            Assert.IsTrue(fileConfiger.GetConfigValue(variable, value));
+
+            string testFilePath = Environment.CurrentDirectory + Path.DirectorySeparatorChar + "fileTest.settings";
+
+            try
+            {
+                File.Delete(testFilePath);
+
+                var fileConfiger = new FileConfig();
+                fileConfiger.FilePath = testFilePath;
+
+                fileConfiger.SetConfigValue(name, value);
+
+                string[] results = fileConfiger.ParseConfigEntry(testEntry);
+
+
+                Assert.IsTrue(results[0] == name && results[1] == value);
+            }
+
+            finally
+            {
+                File.Delete(testFilePath);
+            }
         }
 
 

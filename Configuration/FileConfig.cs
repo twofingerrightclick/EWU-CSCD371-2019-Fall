@@ -26,16 +26,16 @@ namespace Configuration
             return true;
         }
 
-        private bool NameFoundInFile(string configPair, string nameSearchedFor)
+        public string [] ParseConfigEntry(string configEntry)
         {
             string[] splitOn = { "<",">"};
             int count = 2;
-            string currentName = configPair.Split(splitOn, count, StringSplitOptions.RemoveEmptyEntries).[0];
+            string[] parsedEntry = configEntry.Split(splitOn, count, StringSplitOptions.RemoveEmptyEntries);
+           
+            //string currentEntryName = currentEntry[0];
+            Console.WriteLine(parsedEntry);
 
-            if (currentName == nameSearchedFor)
-                return true;
-            else
-                return false;
+            return parsedEntry;
             
         }
 
@@ -47,7 +47,7 @@ namespace Configuration
 
             
 
-            using (StreamWriter writer = new StreamWriter(_FilePath, append: true))
+            using (StreamWriter writer = new StreamWriter(FilePath, append: true))
             {
 
                 if (value == null) { 
