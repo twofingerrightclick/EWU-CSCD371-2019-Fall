@@ -13,7 +13,7 @@ namespace Configuration.Tests
         [DataRow("CantHaveEqualsinValue", "Equals=")]
         [DataRow("", "noEmptyNameString")]
         [DataRow("noEmptyValueString", "")]
-        
+
         [ExpectedException(typeof(ArgumentException))]
         public void Set_Environment_Variable_Variable_Must_Be_Valid_Format(string variable, string value)
         {
@@ -78,7 +78,7 @@ namespace Configuration.Tests
 
         [DataTestMethod]
         [DataRow("name1", "test")]
-        
+
 
         public void Get_Entry_By_Name_True_When_Entry_Exists_And_False_When_Not(string name, string value)
         {
@@ -99,6 +99,44 @@ namespace Configuration.Tests
 
                 Assert.IsTrue(fileConfiger.GetConfigValue(name, out value));
                 Assert.IsFalse(fileConfiger.GetConfigValue("thisEntryWasntSet", out value));
+
+            }
+
+            finally
+            {
+                File.Delete(testFilePath);
+            }
+        }
+
+
+        [TestMethod]
+
+        public void Changes_Asscoiated_Config_value_If_Config_Value_Already_Set_For_Name()
+        {
+
+            string testFilePath = Environment.CurrentDirectory + Path.DirectorySeparatorChar + "fileTest.settings";
+
+            try
+            {
+                File.Delete(testFilePath);
+
+                var fileConfiger = new FileConfig();
+                fileConfiger.FilePath = testFilePath;
+
+                string name = "name";
+                string originalValue = "one";
+                string newValue = "two";
+
+                
+
+                fileConfiger.SetConfigValue(name, originalValue);
+                fileConfiger.SetConfigValue(name, newValue);
+
+
+                string finalValue;
+                fileConfiger.GetConfigValue(name, out finalValue);
+                Assert.IsTrue(string.Equals(finalValue, newValue));
+
 
             }
 

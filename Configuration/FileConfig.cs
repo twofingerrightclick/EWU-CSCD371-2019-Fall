@@ -20,7 +20,7 @@ namespace Configuration
 
                     string[] currentEntry = ParseConfigEntry(currentLine);
 
-                    Console.WriteLine("line: " + lineCount + " - " + currentEntry[0]);
+                    Console.WriteLine("line: " + lineCount + " - " + currentEntry[0]+" value: " + currentEntry[1]);
 
                     if (string.Equals(currentEntry[0], name))
                     {
@@ -85,13 +85,15 @@ namespace Configuration
             {
                 using (StreamReader reader = new StreamReader(FilePath))
                 {
-                    string currentEntry;
-                    while ((currentEntry = reader.ReadLine()) != null && !entryFound)
+                    string currentLine;
+                    while ((currentLine = reader.ReadLine()) != null && !entryFound)
                     {
 
-                        string currentEntryName = ParseConfigEntry(currentEntry)[0];
+                        string [] currentEntry = ParseConfigEntry(currentLine);
+                        Console.WriteLine("set entry name: " + currentEntry[0]);
                         if (string.Equals(currentEntry[0], name))
                         {
+                            Console.WriteLine("found entry: "+currentEntry[0]);
                             entryFound = true;
 
                         }
