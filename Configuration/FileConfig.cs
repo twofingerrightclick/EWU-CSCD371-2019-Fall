@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace Configuration
 {
@@ -11,32 +9,48 @@ namespace Configuration
         public string FilePath { get; set; } = Environment.CurrentDirectory + Path.DirectorySeparatorChar + "config.settings";
         public bool GetConfigValue(string name, string? value)
         {
+            int lineCount = 0;
+            bool entryFound=false;
             using (StreamReader reader = new StreamReader(FilePath))
-            {
-                while (!reader.EndOfStream) {
-
-                    reader.ReadLine();
+            {   
+                
+                while (!reader.EndOfStream)
+                {
+                    string currentEntry = reader.ReadLine();
+                    string currentEntryName = ParseConfigEntry(currentEntry)[0];
+                    if (currentEntryName==name){
+                        entryFound=true;
+                        break;
+                    }
+                    lineCount++;
 
                 }
-                
-                Console.WriteLine(reader.ReadToEnd());
+
+                //Console.WriteLine(reader.ReadToEnd());
 
             }
-            //throw new NotImplementedException();
-            return true;
+            
+            return entryFound;
         }
 
-        public string [] ParseConfigEntry(string configEntry)
+        public string[] ParseConfigEntry(string configEntry)
         {
-            string[] splitOn = { "<",">"};
-            int count = 2;
-            string[] parsedEntry = configEntry.Split(splitOn, count, StringSplitOptions.RemoveEmptyEntries);
-           
-            //string currentEntryName = currentEntry[0];
-            Console.WriteLine(parsedEntry);
+            char[] splitOn = { '<', '>','=' };
+            
+            string[] parsedEntry = configEntry.Split(splitOn, StringSplitOptions.RemoveEmptyEntries);
 
             return parsedEntry;
-            
+
+        }
+
+
+        //for small files
+        public void editConfigEntry(string name, string newValue, int lineToEdit)
+        {
+            string[] arrLine = File.ReadAllLines(FilePath);
+            arrLine[lineToEdit - 1] = string.Format("<{0}={1}>", name, newValue);
+            File.WriteAllLines(FilePath, arrLine);
+
         }
 
         public bool SetConfigValue(string name, string? value)
@@ -45,16 +59,17 @@ namespace Configuration
 
             CheckValidInput(name, value);
 
-            
+
 
             using (StreamWriter writer = new StreamWriter(FilePath, append: true))
             {
 
-                if (value == null) { 
-                    value="not set";
+                if (value == null)
+                {
+                    value = "not set";
                 }
-                writer.WriteLine(string.Format("<{0}={1}>",name,value));
-               
+                writer.WriteLine(string.Format("<{0}={1}>", name, value));
+
             }
 
 
@@ -63,20 +78,25 @@ namespace Configuration
 
         private void CheckValidInput(string name, string? value)
         {
-            
+            if (name == null)
+            {
+
+                throw new ArgumentNullException("Environment Variable name was null");
+
+            }
 
             if (name.Contains("="))
             {
-                throw new ArgumentException("Variable name cannot contain \'=\'");
+                throw new ArgumentException("Environment Variable name cannot contain \'=\'");
             }
             if (string.IsNullOrEmpty(name))
             {
-                throw new ArgumentException("Name cannot be empty or Null");
+                throw new ArgumentException("Environment Variable Name cannot be empty or Null");
             }
 
             if (name.Contains(" "))
             {
-                throw new ArgumentException("Variable name cannot have spaces");
+                throw new ArgumentException("Environment Variable name cannot have spaces");
             }
             if (value != null)
             {
@@ -90,7 +110,7 @@ namespace Configuration
                 }
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentException("Name cannot be empty");
+                    throw new ArgumentException("value cannot be empty");
                 }
 
             }

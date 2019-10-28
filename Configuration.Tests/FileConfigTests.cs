@@ -25,7 +25,7 @@ namespace Configuration.Tests
         [DataTestMethod]
         [DataRow(null, "value")]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Set_Environment_Variable_Variable_CantBe_Null(string variable, string value)
+        public void Set_Environment_Variable_Variable_Cant_Be_Null(string variable, string value)
         {
             var fileConfiger = new FileConfig();
             fileConfiger.SetConfigValue(variable, value);
@@ -45,7 +45,7 @@ namespace Configuration.Tests
 
 
         [DataTestMethod]
-        [DataRow("name", "test", "<name>=<value>")]
+        [DataRow("name", "test", "<name>=<test>")]
 
         public void Config_File_Entry_Correctly_Parsed(string name, string value, string testEntry)
         {
@@ -64,7 +64,38 @@ namespace Configuration.Tests
                 string[] results = fileConfiger.ParseConfigEntry(testEntry);
 
 
-                Assert.IsTrue(results[0] == name && results[1] == value);
+
+                Assert.IsTrue(results[0] == name);
+                Assert.IsTrue(results[1] == value);
+            }
+
+            finally
+            {
+                File.Delete(testFilePath);
+            }
+        }
+
+
+        [DataTestMethod]
+        [DataRow("name", "test")]
+
+        public void Get_Entry_By_Name_True_When_Entry_Exists_And_False_When_Not(string name, string value)
+        {
+
+            string testFilePath = Environment.CurrentDirectory + Path.DirectorySeparatorChar + "fileTest.settings";
+
+            try
+            {
+                File.Delete(testFilePath);
+
+                var fileConfiger = new FileConfig();
+                fileConfiger.FilePath = testFilePath;
+
+                fileConfiger.SetConfigValue(name, value);
+
+                Assert.IsTrue(fileConfiger.GetConfigValue(name, value));
+                Assert.IsFalse(fileConfiger.GetConfigValue("thisEntryWasntSet", value));
+
             }
 
             finally
