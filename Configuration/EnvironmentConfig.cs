@@ -1,5 +1,6 @@
 ﻿using System;
 
+
 namespace Configuration
 {
     public class EnvironmentConfig : IConfig
@@ -7,6 +8,8 @@ namespace Configuration
 
         public bool GetConfigValue(string name, out string? value)
         {
+            value = null;
+            IConfigUtilities.CheckValidConfigInput(name, value);
 
             value = Environment.GetEnvironmentVariable(name);
             
@@ -16,6 +19,8 @@ namespace Configuration
 
         public bool SetConfigValue(string name, string? value)
         {
+            IConfigUtilities.CheckValidConfigInput(name, value);
+
             Environment.SetEnvironmentVariable(name, value);
 
             return true;

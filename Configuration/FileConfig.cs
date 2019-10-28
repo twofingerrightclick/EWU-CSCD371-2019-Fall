@@ -9,7 +9,10 @@ namespace Configuration
 
         public string FilePath { get; set; } = Environment.CurrentDirectory + Path.DirectorySeparatorChar + "config.settings";
         public bool GetConfigValue(string name, out string? value)
-        {
+        {   
+           
+            value = null;
+            IConfigUtilities.CheckValidConfigInput(name, value);
             value = null;
             int lineCount;
             bool entryFound = SearchAndRetreiveValue(name, ref value, out lineCount);
@@ -90,9 +93,9 @@ namespace Configuration
         public bool SetConfigValue(string name, string? value)
         {
 
-            
 
-            CheckValidInput(name, value);
+
+            IConfigUtilities.CheckValidConfigInput( name, value);
 
             int lineCount = 0;
             bool entryFound = false;
@@ -130,44 +133,6 @@ namespace Configuration
             return true;
         }
 
-        private void CheckValidInput(string name, string? value)
-        {
-            if (name == null)
-            {
-
-                throw new ArgumentNullException("Environment Variable name was null");
-
-            }
-
-            if (name.Contains("="))
-            {
-                throw new ArgumentException("Environment Variable name cannot contain \'=\'");
-            }
-            if (string.IsNullOrEmpty(name))
-            {
-                throw new ArgumentException("Environment Variable Name cannot be empty or Null");
-            }
-
-            if (name.Contains(" "))
-            {
-                throw new ArgumentException("Environment Variable name cannot have spaces");
-            }
-            if (value != null)
-            {
-                if (value.Contains(" "))
-                {
-                    throw new ArgumentException("Value cannot have spaces");
-                }
-                if (value.Contains("="))
-                {
-                    throw new ArgumentException("Value cannot have \'=\'");
-                }
-                if (string.IsNullOrEmpty(value))
-                {
-                    throw new ArgumentException("value cannot be empty");
-                }
-
-            }
-        }
+       
     }
 }
