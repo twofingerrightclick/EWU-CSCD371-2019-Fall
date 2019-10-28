@@ -77,7 +77,8 @@ namespace Configuration.Tests
 
 
         [DataTestMethod]
-        [DataRow("name", "test")]
+        [DataRow("name1", "test")]
+        
 
         public void Get_Entry_By_Name_True_When_Entry_Exists_And_False_When_Not(string name, string value)
         {
@@ -91,10 +92,13 @@ namespace Configuration.Tests
                 var fileConfiger = new FileConfig();
                 fileConfiger.FilePath = testFilePath;
 
+                fileConfiger.SetConfigValue("2name2", "multipleEntries");
                 fileConfiger.SetConfigValue(name, value);
+                fileConfiger.SetConfigValue("3name3", "multipleEntries");
+
 
                 Assert.IsTrue(fileConfiger.GetConfigValue(name, out value));
-                //Assert.IsFalse(fileConfiger.GetConfigValue("thisEntryWasntSet", out value));
+                Assert.IsFalse(fileConfiger.GetConfigValue("thisEntryWasntSet", out value));
 
             }
 

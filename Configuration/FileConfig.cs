@@ -14,19 +14,24 @@ namespace Configuration
             bool entryFound = false;
             using (StreamReader reader = new StreamReader(FilePath))
             {
-
-                while (!reader.EndOfStream)
+                string currentLine;
+                while ((currentLine = reader.ReadLine()) != null && !entryFound)
                 {
-                    string currentLine = reader.ReadLine();
+
                     string[] currentEntry = ParseConfigEntry(currentLine);
 
-                    if (currentEntry[0] == name)
+                    Console.WriteLine("line: " + lineCount + " - " + currentEntry[0]);
+
+                    if (string.Equals(currentEntry[0], name))
                     {
                         entryFound = true;
                         value = currentEntry[1];
-                        break;
+
                     }
-                    lineCount++;
+                    else
+                    {
+                        lineCount++;
+                    }
 
                 }
 
@@ -62,55 +67,64 @@ namespace Configuration
             string[] arrLine = File.ReadAllLines(FilePath);
             arrLine[lineToEdit] = newEntry;
             File.WriteAllLines(FilePath, arrLine);
-           
+
 
         }
 
         public bool SetConfigValue(string name, string? value)
         {
 
-            Console.WriteLine(FilePath);
+            //Console.WriteLine(FilePath);
 
             CheckValidInput(name, value);
 
-            //int lineCount = 0;
-            //bool entryFound = false;
+            int lineCount = 0;
+            bool entryFound = false;
 
+            if (File.Exists(FilePath))
+            {
+                using (StreamReader reader = new StreamReader(FilePath))
+                {
+                    string currentEntry;
+                    while ((currentEntry = reader.ReadLine()) != null && !entryFound)
+                    {
 
-            //using (StreamReader reader = new StreamReader(FilePath))
-            //{
-            //    string currentEntry;
-            //    while ((currentEntry = reader.ReadLine()) != null)
-            //    {
-                    
-            //        string currentEntryName = ParseConfigEntry(currentEntry)[0];
-            //        if (currentEntryName == name)
-            //        {
-            //            entryFound = true;
-            //            break;
-            //        }
+                        string currentEntryName = ParseConfigEntry(currentEntry)[0];
+                        if (string.Equals(currentEntry[0], name))
+                        {
+                            entryFound = true;
 
-            //        lineCount++;
+                        }
 
-            //    }
+                        else
+                        {
+                            lineCount++;
+                        }
 
-            //}
+                    }
 
-            //if (value == null)
-            //{
-            //    value = "";
-            //}
+                }
+            }
+
+            if (value == null)
+            {
+                value = "";
+            }
 
             string newEntry = string.Format("<{0}={1}>", name, value);
 
-            //if (entryFound)
-            //{
-            //    editConfigEntry(newEntry, lineCount);
-            //}
-            //else
-            //{
-                File.AppendAllText(FilePath,newEntry);
-            //}
+            if (entryFound)
+            {
+                editConfigEntry(newEntry, lineCount);
+            }
+            else
+            {
+                using (StreamWriter writer = new StreamWriter(FilePath, append: true))
+                {
+                    writer.WriteLine(newEntry);
+
+                }
+            }
             return true;
         }
 
