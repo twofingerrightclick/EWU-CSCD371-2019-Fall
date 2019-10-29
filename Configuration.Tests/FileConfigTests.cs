@@ -13,6 +13,7 @@ namespace Configuration.Tests
         [DataRow("CantHaveEqualsinValue", "Equals=")]
         [DataRow("", "noEmptyNameString")]
         [DataRow("noEmptyValueString", "")]
+        [DataRow(null, "value")]
 
         [ExpectedException(typeof(ArgumentException))]
         public void Set_Environment_Variable_Variable_Must_Be_Valid_Format(string variable, string value)
@@ -22,15 +23,7 @@ namespace Configuration.Tests
 
         }
 
-        [DataTestMethod]
-        [DataRow(null, "value")]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Set_Environment_Variable_Variable_Cant_Be_Null(string variable, string value)
-        {
-            var fileConfiger = new FileConfig();
-            fileConfiger.SetConfigValue(variable, value);
-
-        }
+       
 
         [DataTestMethod]
         [DataRow("name", "value1")]

@@ -2,7 +2,7 @@
 
 namespace Configuration
 {
-    class MockConfig : IConfig
+    public class MockConfig : IConfig
     {
         private Dictionary<string, string> enviromentConfigPairs = new Dictionary<string, string>();
         public bool GetConfigValue(string name, out string? value)
@@ -26,8 +26,13 @@ namespace Configuration
                 enviromentConfigPairs.Remove(name);
                 return true;
             }
-            else
-                enviromentConfigPairs.Add(name, value);
+            else if (enviromentConfigPairs.ContainsKey(name))
+            {
+                enviromentConfigPairs.Remove(name);
+            }
+
+
+            enviromentConfigPairs.Add(name, value);
 
 
             return true;

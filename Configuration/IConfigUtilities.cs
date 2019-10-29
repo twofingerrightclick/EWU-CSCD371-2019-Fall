@@ -13,8 +13,8 @@ namespace Configuration
             if (name == null)
             {
 
-                throw new ArgumentNullException("Environment Variable name was null");
-                //is this only for runtime someone said?
+                throw new ArgumentException("Environment Variable name was null");
+              
 
             }
 
