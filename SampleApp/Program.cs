@@ -19,16 +19,30 @@ namespace SampleApp
             };
             char[] splitOn = { '=' };
 
-            
 
-           
+
+
             Console.WriteLine("Current Enviroment Config Values: ");
 
             IterateThroughConfigValues(configSettings, splitOn, environmentConfiger);
 
-            
-            
-            
+            //--------------------------------------------------
+
+            Console.WriteLine("Iterate Through Default MockConfig Values: ");
+
+            IConfig defaultMockConfiger = new MockConfig(true);
+            string[,] defaultMockConfigSettings = ((MockConfig)defaultMockConfiger)._DefaultAvailableConfigSettings;
+
+            for (int i = 0; i < defaultMockConfigSettings.GetLength(0); i++)
+            {
+                string name = defaultMockConfigSettings[i, 0];
+                defaultMockConfiger.GetConfigValue(name, out string? value);
+                Console.WriteLine($"{name}={value}");
+                Console.WriteLine();
+            }
+
+            //-----------------------------------------------------------------
+
             IConfig mockConfiger = new MockConfig();
 
             Console.WriteLine("Setting MockConfig Values: ");
@@ -48,11 +62,11 @@ namespace SampleApp
 
 
 
-      
+
 
         }
 
-        public static void IterateThroughConfigValues(List <string> configValues, char[] splitOnCharactersForConfigValues, IConfig iconfig)
+        public static void IterateThroughConfigValues(List<string> configValues, char[] splitOnCharactersForConfigValues, IConfig iconfig)
         {
             Console.WriteLine($"Getting {iconfig.ToString()} Values: ");
             foreach (string setting in configValues)
