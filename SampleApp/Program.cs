@@ -43,6 +43,18 @@ namespace SampleApp
 
             //-----------------------------------------------------------------
 
+            Console.WriteLine("Iterate Through Default MockConfig Values with List method: ");
+
+            IConfig defaultMockConfiger2 = new MockConfig(true);
+
+
+            ((MockConfig)defaultMockConfiger2).List();
+
+            Console.WriteLine();
+
+            //-----------------------------------------------------------------
+
+
             IConfig mockConfiger = new MockConfig();
 
             Console.WriteLine("Setting MockConfig Values: ");

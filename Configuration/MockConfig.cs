@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Configuration
 {
@@ -52,6 +53,13 @@ namespace Configuration
 
 
             return true;
+        }
+
+        public void List() {
+            foreach (KeyValuePair<string, string> configPair in enviromentConfigPairs)
+            {
+                Console.WriteLine("<{0}>=<{1}>", configPair.Key, configPair.Value);
+            }
         }
     }
 }
