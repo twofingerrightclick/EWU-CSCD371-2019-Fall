@@ -93,8 +93,6 @@ namespace Configuration
         public bool SetConfigValue(string name, string? value)
         {
 
-
-
             IConfigUtilities.CheckValidConfigInput( name, value);
 
             int lineCount = 0;

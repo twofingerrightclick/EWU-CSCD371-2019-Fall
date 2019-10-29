@@ -7,6 +7,10 @@ namespace Configuration.Tests
     [TestClass]
     public class FileConfigTests
     {
+
+        static string testFilePath = Environment.CurrentDirectory + Path.DirectorySeparatorChar + "fileTest.settings";
+
+
         [DataTestMethod]
         [DataRow("cant have spaces in name", "spacesinName")]
         [DataRow("CantHave=inName", "equalsInName")]
@@ -29,7 +33,7 @@ namespace Configuration.Tests
         [DataRow("name", "value1")]
         [DataRow("name", "value2")]
         [DataRow("name", "value3")]
-        public void Set_Variable_Correctly_Appends_To_File(string variable, string value)
+        public void Set_Variable_Correctly_Appends_New_Entry_To_File(string variable, string value)
         {
             var fileConfiger = new FileConfig();
             fileConfiger.SetConfigValue(variable, value);
@@ -43,7 +47,6 @@ namespace Configuration.Tests
         public void Config_File_Entry_Correctly_Parsed(string name, string value, string testEntry)
         {
 
-            string testFilePath = Environment.CurrentDirectory + Path.DirectorySeparatorChar + "fileTest.settings";
 
             try
             {
@@ -76,7 +79,6 @@ namespace Configuration.Tests
         public void Get_Entry_By_Name_True_When_Entry_Exists_And_False_When_Not(string name, string value)
         {
 
-            string testFilePath = Environment.CurrentDirectory + Path.DirectorySeparatorChar + "fileTest.settings";
 
             try
             {
@@ -107,7 +109,6 @@ namespace Configuration.Tests
         public void Changes_Asscoiated_Config_value_If_Config_Value_Already_Set_For_Name()
         {
 
-            string testFilePath = Environment.CurrentDirectory + Path.DirectorySeparatorChar + "fileTest.settings";
 
             try
             {
@@ -147,7 +148,6 @@ namespace Configuration.Tests
         public void Remove_Config_Entry_By_Setting_With_Null_Success_True()
         {
 
-            string testFilePath = Environment.CurrentDirectory + Path.DirectorySeparatorChar + "fileTest.settings";
 
             try
             {
