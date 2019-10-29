@@ -28,7 +28,7 @@ namespace Configuration.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void Throws_Exception_If_VariableName_Is_Empty()
         {
             var environmentConfiger = new EnvironmentConfig();
