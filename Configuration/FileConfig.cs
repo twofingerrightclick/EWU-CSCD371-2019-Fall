@@ -20,7 +20,7 @@ namespace Configuration
             return entryFound;
         }
 
-        private bool SearchAndRetreiveValue(string name, ref string value, out int lineIndex)
+        private bool SearchAndRetreiveValue(string name, ref string? value, out int lineIndex)
         {
             bool entryFound = false;
             lineIndex = 0;

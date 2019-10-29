@@ -15,10 +15,10 @@ namespace Configuration.Tests
         [DataRow("CantHaveEqualsinValue", "Equals=")]
         [DataRow("", "noEmptyNameString")]
         [DataRow("noEmptyValueString", "")]
-        [DataRow(null, "value")]
+        [DataRow(null, "nameIsNull")]
 
         [ExpectedException(typeof(ArgumentException))]
-        public void Set_Environment_Variable_Variable_Must_Be_Valid_Format(string variable, string value)
+        public void Set_Environment_Variable_Variable_Must_Be_Valid_Format(string variable, string? value)
         {
             var mockConfiger = new MockConfig();
             mockConfiger.SetConfigValue(variable, value);
@@ -29,7 +29,7 @@ namespace Configuration.Tests
         [DataRow("name", "value1")]
         [DataRow("name", "value2")]
         [DataRow("name", "value3")]
-        public void Set_Variable_Correctly_Appends_To_File(string variable, string value)
+        public void Set_Variable_Correctly_Appends_To_File(string variable, string? value)
         {
             var mockConfiger = new MockConfig();
             mockConfiger.SetConfigValue(variable, value);
@@ -39,7 +39,7 @@ namespace Configuration.Tests
         [DataTestMethod]
         [DataRow("name1", "test")]
 
-        public void Get_Entry_By_Name_True_When_Entry_Exists_And_False_When_Not(string name, string value)
+        public void Get_Entry_By_Name_True_When_Entry_Exists_And_False_When_Not(string name, string? value)
         {
             var mockConfiger = new MockConfig();
             

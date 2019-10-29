@@ -12,10 +12,7 @@ namespace Configuration
         {
             if (name == null)
             {
-
-                throw new ArgumentException("Environment Variable name was null");
-              
-
+                throw new ArgumentException("Environment Variable name was null", nameof(name));
             }
 
             if (name.Contains("="))
@@ -31,6 +28,8 @@ namespace Configuration
             {
                 throw new ArgumentException("Environment Variable name cannot have spaces");
             }
+
+
             if (value != null)
             {
                 if (value.Contains(" "))
