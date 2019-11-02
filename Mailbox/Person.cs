@@ -2,6 +2,7 @@
 {
     public class Person
     {
+        //make a struct!
 
         public (string first, string last) Name { get; private set; }
 
