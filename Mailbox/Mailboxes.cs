@@ -101,12 +101,14 @@ namespace Mailbox
                 return (-1,-1);
             }
 
-            if (UsedLocations[newBoxLocation.x,newBoxLocation.y] != true && adjacentPeople.Contains(person))
+            if (adjacentPeople.Contains(person))
             {
                 newBoxLocation = ValidIncrementBoxLocation(newBoxLocation);
                 PlaceNonAdjacent(newBoxLocation, person);
 
             }
+
+
 
             return newBoxLocation;
 

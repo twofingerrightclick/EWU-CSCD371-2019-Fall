@@ -147,6 +147,12 @@ namespace Mailbox
             Person person = new Person(firstName, lastName);
 
             (int, int) newBoxCoordinates = mailboxes.PlaceNonAdjacent((0,0), person);
+
+            if (newBoxCoordinates == (-1, -1)) { 
+                // should do something to say that it can't add the mailbox.
+                Object o = new Object();
+                return (Mailbox)o;
+            }
             
                 
              
