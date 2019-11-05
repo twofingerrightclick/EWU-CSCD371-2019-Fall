@@ -1,6 +1,8 @@
-﻿namespace Mailbox
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Mailbox
 {
-    public class Person
+    public struct Person : System.IEquatable<Person>
     {
         //make a struct!
 
@@ -21,9 +23,25 @@
 
 
         }
-      
 
-        
+        public override string ToString()
+        {
+            return $"{Name.last}, {Name.first}";
+        }
 
+        public bool Equals([AllowNull] Person other)
+        {   
+            //name is a value tuple so does this work without any boxing?
+            return Name == other.Name;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return Equals(obj as Person?);
+        }
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode();
+        }
     }
 }
