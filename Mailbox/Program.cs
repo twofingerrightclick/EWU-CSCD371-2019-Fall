@@ -9,7 +9,7 @@ namespace Mailbox
 
    
 
-    class Program
+    public class Program
     {
         private const int Width = 50;
         private const int Height = 10;
@@ -146,20 +146,16 @@ namespace Mailbox
             //validate text no nulls,.
             Person person = new Person(firstName, lastName);
 
-            (int, int) newBoxCoordinates = mailboxes.PlaceNonAdjacent((0,0), person);
+            (int, int) newBoxCoordinates = mailboxes.GetOpenBox(person);
 
             if (newBoxCoordinates == (-1, -1)) { 
                 // should do something to say that it can't add the mailbox.
                 Object o = new Object();
                 return (Mailbox)o;
             }
-            
-                
-             
 
-
-
-           return new Mailbox(size, newBoxCoordinates, person);
+            mailboxes.UsedLocations[newBoxCoordinates.Item1,newBoxCoordinates.Item2] = true;
+            return new Mailbox(size, newBoxCoordinates, person);
 
             
             

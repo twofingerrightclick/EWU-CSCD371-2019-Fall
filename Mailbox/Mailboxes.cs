@@ -19,7 +19,8 @@ namespace Mailbox
             Width = width;
             Height = height;
 
-            UsedLocations = new bool[width, height];
+            UsedLocations = new bool[height, width];
+
             
         }
 
@@ -67,78 +68,49 @@ namespace Mailbox
             return isOccupied;
         }
 
-        public ValueTuple<int, int> GetOpenBox((int x, int y) start)
+        public ValueTuple<int, int> GetOpenBox( Person person)
         {
-           
-            for (int x = start.x; x < Width; ++x)
-            {
-                for (int y = 0; start.y < Height; ++y)
+
+            List<(int x, int y)> unusedLocations = GetOpenBoxes();
+
+            HashSet<Person> adjacentPeople = new HashSet<Person>();
+
+            foreach ((int x, int y) openBox in unusedLocations) {
+                GetAdjacentPeople(openBox.x, openBox.y, out adjacentPeople);
+                if (!adjacentPeople.Contains(person))
                 {
-                    if (UsedLocations[x, y].Equals(false)) {
-                        UsedLocations[x, y] = true;
-                        return ValueTuple.Create(x, y); 
-                    }
+                    return (openBox.x, openBox.y);
 
                 }
             }
+
             //all boxes used!
             return ValueTuple.Create(-1, -1);
         }
 
-
-        public ValueTuple<int,int> PlaceNonAdjacent(ValueTuple <int,int> startCoordinate, Person person)
-        {
-            (int x, int y) newBoxLocation;
-            HashSet<Person> adjacentPeople = new HashSet<Person>();
+        //public void Add(Mailbox box)
+        //{
             
+        //    UsedLocations[box.Location.X, box.Location.Y] = true;
             
-            newBoxLocation = GetOpenBox(startCoordinate);
+        //}
 
-            GetAdjacentPeople(newBoxLocation.x, newBoxLocation.y, out adjacentPeople);
 
-            if (newBoxLocation == (-1, -1))
-            {
-                return (-1,-1);
+        public List<(int x, int y)> GetOpenBoxes() {
+
+            List<(int x, int y)> unusedLocations = new List<(int x, int y)>();
+
+            for (int x = 0; x < Height; x++) {
+                for (int y = 0; y < Width; y++)
+                {
+                    if (UsedLocations[x, y] != true) {
+                        unusedLocations.Add((x, y));
+                    }
+                }
             }
 
-            if (adjacentPeople.Contains(person))
-            {
-                newBoxLocation = ValidIncrementBoxLocation(newBoxLocation);
-                PlaceNonAdjacent(newBoxLocation, person);
-
-            }
-
-
-
-            return newBoxLocation;
-
-            
-        }
-
-        private (int x, int y) ValidIncrementBoxLocation((int x, int y) newBoxLocation)
-        {
-            int newX = newBoxLocation.x;
-            int newY = newBoxLocation.y;
-
-            if (newBoxLocation.x < Height-1) {
-                newX += 1;
-            }
-            else
-            {
-                newX = 0;
-            }
-
-            if (newBoxLocation.y < Width-1)
-            {
-                newY += 1;
-            }
-            else
-            {
-                newY = 0;
-            }
-
-            return (newX, newY);
-           
-        }
+            return unusedLocations;
+        } 
+        
     }
 }
