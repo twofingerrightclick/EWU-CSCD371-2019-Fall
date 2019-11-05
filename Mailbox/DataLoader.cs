@@ -68,9 +68,7 @@ namespace Mailbox
                 return null!;
             }
 
-            if (mailBoxes.UsedLocations[0, 0] == true) {
-                Console.WriteLine("working here1");
-            }
+            
             return mailBoxes;
 
 
