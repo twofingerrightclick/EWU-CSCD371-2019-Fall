@@ -17,11 +17,12 @@ namespace Mailbox
         static void Main(string[] args)
         {
             //Main does not need to be unit tested.
+            //using var dataLoader = new DataLoader(File.Open("Mailboxes.json", FileMode.OpenOrCreate, FileAccess.ReadWrite));
             using var dataLoader = new DataLoader(File.Open("Mailboxes.json", FileMode.OpenOrCreate, FileAccess.ReadWrite));
 
-                      
 
-        Mailboxes boxes = new Mailboxes(dataLoader.Load() ?? new List<Mailbox>(), Width, Height);
+
+            Mailboxes boxes = new Mailboxes(dataLoader.Load() ?? new List<Mailbox>(), Width, Height);
 
             while (true)
             {
@@ -75,7 +76,9 @@ namespace Mailbox
                     case 4:
                         Console.WriteLine("Enter box number as x,y");
                         string boxNumber = Console.ReadLine();
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                         string[] parts = boxNumber?.Split(',');
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
                         if (parts?.Length == 2 &&
                             int.TryParse(parts[0], out int x) &&
                             int.TryParse(parts[1], out int y))
