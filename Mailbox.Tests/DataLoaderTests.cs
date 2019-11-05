@@ -50,11 +50,6 @@ namespace Mailbox.Tests
             }
 
         }
-        [TestMethod]
-        public void Test_Open_File()
-        {
-            FileStream s= File.Open("C:\\Users\\saffron\\Desktop\\" + "Mailboxes.json", FileMode.OpenOrCreate, FileAccess.ReadWrite);
-            s.Close();
-        }
+        
     }
 }

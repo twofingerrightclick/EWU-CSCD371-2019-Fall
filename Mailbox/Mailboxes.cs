@@ -96,7 +96,7 @@ namespace Mailbox
         //}
 
 
-        public List<(int x, int y)> GetOpenBoxes() {
+        private List<(int x, int y)> GetOpenBoxes() {
 
             List<(int x, int y)> unusedLocations = new List<(int x, int y)>();
 
