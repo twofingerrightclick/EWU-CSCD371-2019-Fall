@@ -27,7 +27,7 @@ namespace Mailbox
         public int Width { get; }
         public int Height { get; }
 
-        public bool[,] UsedLocations { get; private set; }
+        public bool[,] UsedLocations { get; set; }
 
         public bool GetAdjacentPeople(int x, int y, out HashSet<Person> adjacentPeople)
         {

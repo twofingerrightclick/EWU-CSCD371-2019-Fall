@@ -44,21 +44,34 @@ namespace Mailbox
             Dispose(false);
         }
 
-        public List<Mailbox> Load()
+        public Mailboxes Load()
         {
             StreamSource.Position = 0;
             using var sr = new StreamReader(StreamSource, leaveOpen: true);
-            List<Mailbox> MailBoxesFromJson;
+            List<Mailbox> mailBoxesFromJson;
+            Mailboxes? mailBoxes = null;
             try
             {
-                MailBoxesFromJson = JsonConvert.DeserializeObject<List<Mailbox>>(sr.ReadToEnd());
+                mailBoxesFromJson = JsonConvert.DeserializeObject<List<Mailbox>>(sr.ReadToEnd());
+
+                mailBoxes = new Mailboxes(new List<Mailbox>(), Program.Width, Program.Height);
+                foreach (Mailbox box in mailBoxesFromJson)
+                {
+                    mailBoxes.Add(box);
+                    
+                    mailBoxes.UsedLocations[box.Location.X, box.Location.Y] = true;
+                   
+                }
             }
             catch (JsonReaderException)
             {
                 return null!;
             }
 
-            return MailBoxesFromJson;
+            if (mailBoxes.UsedLocations[0, 0] == true) {
+                Console.WriteLine("working here1");
+            }
+            return mailBoxes;
 
 
 

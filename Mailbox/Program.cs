@@ -7,12 +7,12 @@ using System.Text;
 namespace Mailbox
 {
 
-   
+
 
     public class Program
     {
-        private const int Width = 50;
-        private const int Height = 10;
+        public static int Width { get; private set; } = 50;
+        public static int Height { get; private set; } = 10;
 
         public static IConsole Console { get; set; } = new RealConsole();
         static void Main(string[] args)
@@ -23,8 +23,13 @@ namespace Mailbox
 
 
 
-            Mailboxes boxes = new Mailboxes(dataLoader.Load() ?? new List<Mailbox>(), Width, Height);
-            
+            //Mailboxes boxes = new Mailboxes(dataLoader.Load() ?? new List<Mailbox>(), Width, Height);
+            Mailboxes boxes = dataLoader.Load();
+            if (boxes == null) { 
+                boxes= new Mailboxes(dataLoader.Load() ?? new List<Mailbox>(), Width, Height);
+            } 
+
+
             while (true)
             {
                 int selection;
