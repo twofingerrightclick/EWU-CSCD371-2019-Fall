@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Text;
 
 namespace Mailbox
 {
@@ -98,21 +99,56 @@ namespace Mailbox
 
         public static string GetOwnersDisplay(Mailboxes mailboxes)
         {
-            throw new NotImplementedException();
+            if (mailboxes == null)
+            {
+                return "";
+            }
+            StringBuilder sb = new StringBuilder();
+            foreach (Mailbox mailbox in mailboxes) {
+                sb.Append(mailbox + Environment.NewLine);
+            }
 
+            return sb.ToString();
         }
 
         public static string GetMailboxDetails(Mailboxes mailboxes, int x, int y)
         {
-            throw new NotImplementedException();
+            foreach (Mailbox mailbox in mailboxes)
+            {
+                if (mailbox.Location == (x, y)){
+                    return mailbox.ToString();
+                }
+            }
+
+            return $"mailbox ({x},{y}) not in use";
 
         }
 
-        public static Mailbox AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Sizes size)
+        public static Mailbox AddNewMailbox(Mailboxes mailboxes,
+                                            string firstName,
+                                            string lastName,
+                                            Sizes size)
         {
-            //validate text no nulls,.
-            throw new NotImplementedException();
+            if (mailboxes is null)
+            {
+                throw new ArgumentNullException(nameof(mailboxes));
+            }
 
+            if (string.IsNullOrEmpty(firstName))
+            {
+                throw new ArgumentException("message", nameof(firstName));
+            }
+
+            if (string.IsNullOrEmpty(lastName))
+            {
+                throw new ArgumentException("message", nameof(lastName));
+            }
+            //validate text no nulls,.
+            
+           return new Mailbox(size, (0, 0), new Person(firstName, lastName));
+
+            
+            
         }
     }
 }
