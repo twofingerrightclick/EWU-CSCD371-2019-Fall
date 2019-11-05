@@ -47,7 +47,7 @@ namespace Mailbox
         public List<Mailbox> Load()
         {
             StreamSource.Position = 0;
-            using var sr = new StreamReader(StreamSource);
+            using var sr = new StreamReader(StreamSource, leaveOpen: true);
             List<Mailbox> MailBoxesFromJson;
             try
             {

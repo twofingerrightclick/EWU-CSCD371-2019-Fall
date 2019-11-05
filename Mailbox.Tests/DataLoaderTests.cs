@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,7 +20,7 @@ namespace Mailbox.Tests
         [TestMethod]
         public void Test_One_MailBox_Write_Read()
         {
-            
+
             using var mS = new MemoryStream();
             using DataLoader dl = new DataLoader(mS);
 
@@ -51,7 +50,11 @@ namespace Mailbox.Tests
             }
 
         }
-
-
+        [TestMethod]
+        public void Test_Open_File()
+        {
+            FileStream s= File.Open("C:\\Users\\saffron\\Desktop\\" + "Mailboxes.json", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            s.Close();
+        }
     }
 }

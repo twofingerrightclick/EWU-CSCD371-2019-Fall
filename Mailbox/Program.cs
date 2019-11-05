@@ -18,13 +18,13 @@ namespace Mailbox
         static void Main(string[] args)
         {
             //Main does not need to be unit tested.
-            //using var dataLoader = new DataLoader(File.Open("Mailboxes.json", FileMode.OpenOrCreate, FileAccess.ReadWrite));
             using var dataLoader = new DataLoader(File.Open("Mailboxes.json", FileMode.OpenOrCreate, FileAccess.ReadWrite));
+            //using var dataLoader = new DataLoader(File.Open(@"C:\Users\saffron\Desktop\" + "Mailboxes.json", FileMode.OpenOrCreate, FileAccess.ReadWrite));
 
 
 
             Mailboxes boxes = new Mailboxes(dataLoader.Load() ?? new List<Mailbox>(), Width, Height);
-
+            
             while (true)
             {
                 int selection;
@@ -144,8 +144,16 @@ namespace Mailbox
                 throw new ArgumentException("message", nameof(lastName));
             }
             //validate text no nulls,.
+            Person person = new Person(firstName, lastName);
+
+            (int, int) newBoxCoordinates = mailboxes.PlaceNonAdjacent((0,0), person);
             
-           return new Mailbox(size, (0, 0), new Person(firstName, lastName));
+                
+             
+
+
+
+           return new Mailbox(size, newBoxCoordinates, person);
 
             
             
