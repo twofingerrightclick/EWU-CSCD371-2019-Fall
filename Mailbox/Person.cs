@@ -6,7 +6,7 @@ namespace Mailbox
     {
         //make a struct!
 
-        public (string first, string last) Name { get; private set; }
+        public (string firstName, string lastName) Name { get; private set; }
 
         public Person( string firstName, string lastName) {
             if (firstName is null)
@@ -26,7 +26,7 @@ namespace Mailbox
 
         public override string ToString()
         {
-            return $"{Name.last}, {Name.first}";
+            return $"{Name.lastName}, {Name.firstName}";
         }
 
         public bool Equals([AllowNull] Person other)
@@ -35,10 +35,10 @@ namespace Mailbox
             return Name == other.Name;
         }
 
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as Person?);
-        }
+        //public override bool Equals(object? obj)
+        //{
+        //   return (obj as Person?)this;
+        //}
         public override int GetHashCode()
         {
             return Name.GetHashCode();

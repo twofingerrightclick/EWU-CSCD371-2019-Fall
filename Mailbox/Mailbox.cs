@@ -13,13 +13,13 @@ namespace Mailbox
 
         public Person Owner { get; set; }
 
-        public Mailbox(Sizes size, ValueTuple<int, int> location, Person owner)
+        public Mailbox(Sizes size, ValueTuple<int, int> location, Person Owner)
         {
             if (size.Equals(Sizes.Premium)) throw new ArgumentException(" \"Premium\" is not a size itself", (nameof(size)));
 
             BoxSize = size;
             Location = location;
-            Owner = owner;
+            this.Owner = Owner;
         }
 
         override

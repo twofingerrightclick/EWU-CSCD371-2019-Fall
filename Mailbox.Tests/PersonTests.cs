@@ -37,9 +37,9 @@ namespace Mailbox.Tests
         public void Object_Compare_Two_People_The_Same_True(string firstName1, string lastName1, string firstName2, string lastName2)
         {
             Person person1 = new Person(firstName1, lastName1);
-            Person person2 = new Person(firstName2, lastName2);
+            Object person2 = new Person(firstName2, lastName2);
 
-            Assert.IsTrue((person1).Equals((Object)person2));
+            Assert.IsTrue((person1).Equals(person2));
 
 
         }
