@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Mailbox
 {
     // I AM A MAIL BOX
-    public class Mailbox
+    public class Mailbox : IEquatable<Mailbox>
     {
         //mailbox.Location == (x, y)
         public (int X, int Y) Location { get; set; }
@@ -33,8 +34,18 @@ namespace Mailbox
             return mailboxString + $", BoxSize: {BoxSize}";
         }
 
+        public override bool Equals(object? obj)
+        {
+            return Equals(obj as Mailbox);
+        }
 
-       
+        public bool Equals([AllowNull] Mailbox other)
+        {
+            return other != null &&
+                   Location.Equals(other.Location) &&
+                   BoxSize == other.BoxSize &&
+                   Owner.Equals(other.Owner);
+        }
     }
 
     //public GetOwnersDisplay()

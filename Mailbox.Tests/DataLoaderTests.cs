@@ -14,7 +14,8 @@ namespace Mailbox.Tests
         {
             new Mailbox(Sizes.LargePremium, (0, 0), new Person("Chris", "Martin")),
             new Mailbox(Sizes.Small, (0, 1), new Person("Guy", "Berryman")),
-            new Mailbox(Sizes.Medium, (0, 2), new Person("Will", "Champion"))
+            new Mailbox(Sizes.Medium, (0, 2), new Person("Will", "Champion")),
+            new Mailbox(Sizes.Medium, (0, 3), new Person("Johnny", "Buckland"))
         };
 
         [TestMethod]
@@ -24,12 +25,6 @@ namespace Mailbox.Tests
             using var mS = new MemoryStream();
             using DataLoader dl = new DataLoader(mS);
 
-          
-
-
-            
-
-       
 
             List<Mailbox> mailboxesStart = new List<Mailbox>();
             List<Mailbox> mailboxesEnd = new List<Mailbox>();
