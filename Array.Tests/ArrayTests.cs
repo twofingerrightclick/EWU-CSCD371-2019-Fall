@@ -60,7 +60,7 @@ namespace Array.Tests
         }
 
         [TestMethod]
-        
+
         public void Contains_Returns_True_When_Item_Is_Found()
         {
 
@@ -69,7 +69,7 @@ namespace Array.Tests
             testArray.Add(name);
             Assert.IsTrue(testArray.Contains(name));
 
-  
+
         }
 
 
@@ -81,11 +81,11 @@ namespace Array.Tests
             int copyArraySizeisSmaller = 1;
             Array<string> testArray = new Array<string>(genericSize);
 
-            string[] copyArray= new string[copyArraySizeisSmaller];
+            string[] copyArray = new string[copyArraySizeisSmaller];
 
             testArray.CopyTo(copyArray, 0);
 
-           
+
 
 
         }
@@ -95,7 +95,7 @@ namespace Array.Tests
         public void CopyTo_Validates_Index_Is_Valid_For_Array()
         {
             int genericSize = 2;
-            int copyArraySize= 1;
+            int copyArraySize = 1;
             Array<string> testArray = new Array<string>(genericSize);
 
             string[] copyArray = new string[copyArraySize];
@@ -106,10 +106,10 @@ namespace Array.Tests
 
 
         [TestMethod]
-       
+
         public void CopyTo_Copies_All_Items()
         {
-            
+
             Array<string> testArray = new Array<string>(2);
 
             List<string> list = new List<string>();
@@ -145,6 +145,80 @@ namespace Array.Tests
             Array<string> testArray = new Array<string>() { "one", "two", "three" };
 
             Assert.IsTrue(testArray.Count == 3);
+
+
+
+
+        }
+
+        [TestMethod]
+
+        public void Index_Operator_Retrieves_Correctly()
+        {
+            string[] basicArray = new string[] { "one", "two", "three" };
+
+            Array<string> testArray = new Array<string>() { "one", "two", "three" };
+
+
+            for (int i = 0; i < basicArray.Length; i++)
+            {
+                Assert.IsTrue(testArray[i] == basicArray[i]);
+            }
+
+        }
+
+
+        [TestMethod]
+
+        public void Index_Operator_Sets_Correctly()
+        {
+            string[] basicArray = new string[] { "one", "two", "three" };
+
+            Array<string> testArray = new Array<string>() { "1", "2", "3" };
+    
+
+
+            for (int i = 0; i < basicArray.Length; i++)
+            {
+                testArray[i] = basicArray[i];
+            }
+
+            for (int i = 0; i < basicArray.Length; i++)
+            {
+                Assert.IsTrue(testArray[i] == basicArray[i]);
+            }
+
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void Index_Operator_Validates_Index_Exception_When_Index_Too_Big()
+        {
+            
+
+            Array<string> testArray = new Array<string>() { "one", "two", "three" };
+
+            string s = testArray[3];
+
+            
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void Index_Operator_Validates_Index_Exception_When_Item_At_Index_Has_Not_Been_Initialized()
+        {
+            string[] basicArray = new string[] { "one", "two", "three" };
+
+            Array<string> testArray = new Array<string>(3);
+
+
+            for (int i = 0; i < basicArray.Length; i++)
+            {
+                testArray[i] = basicArray[i];
+            }
+
+            string s = testArray[3];
 
 
 

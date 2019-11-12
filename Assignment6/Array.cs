@@ -9,10 +9,11 @@ namespace Assignment6
         public int Capacity { get; private set; }
 
         private List<T> _Array;
+        
 
         public Array(int capacity)
         {
-            if (capacity<=0)
+            if (capacity <= 0)
             {
                 throw new IndexOutOfRangeException($"{nameof(capacity)} must be greater than 0");
             }
@@ -29,15 +30,15 @@ namespace Assignment6
 
         public bool IsReadOnly => throw new NotImplementedException();
 
-      
+
 
         public void Add(T item)
         {
-            if (Count >= Capacity&& Capacity!=0)
+            if (Count >= Capacity && Capacity != 0)
             {
                 throw new IndexOutOfRangeException("Array is Full");
             }
-            if (item ==null)
+            if (item == null)
             {
                 throw new ArgumentNullException(nameof(item), "Cannot Add Null Item Reference");
             }
@@ -53,7 +54,7 @@ namespace Assignment6
         {
             _Array.Clear();
             Count = 0;
-            
+
         }
 
         public bool Contains(T item)
@@ -64,7 +65,8 @@ namespace Assignment6
 
             }
 
-            if (_Array.Contains(item)) {
+            if (_Array.Contains(item))
+            {
                 return true;
             }
 
@@ -89,23 +91,58 @@ namespace Assignment6
                 throw new ArgumentOutOfRangeException($"more items in collection than { nameof(array)} can fit from index: {nameof(arrayIndex)} = { arrayIndex}");
             }
 
-            
-            
-            for (int i=arrayIndex; i < Capacity; i++)
+
+
+            for (int i = arrayIndex; i < Capacity; i++)
             {
                 array[i] = _Array[i];
             }
         }
 
-        
-        
-        
-      
+        public T this[int index]
+        {
+
+
+            get
+            {
+                if (index > Count - 1)
+                {
+
+                    throw new IndexOutOfRangeException($"Value at: {nameof(index)} has not been initialized. Valid range for index: {0} to {Count - 1}");
+                }
+                if (index < 0)
+                {
+
+                    throw new IndexOutOfRangeException($"Index: {nameof(index)} must be in range of: {0} to {Count - 1}");
+                }
+
+                return _Array[index];
+            }
+
+            set
+            {
+                if (index > Count - 1)
+                {
+
+                    throw new IndexOutOfRangeException($"Value at: {nameof(index)} has not been initialized. Valid range for index: {0} to {Count - 1}");
+                }
+                if (index < 0 )
+                {
+
+                    throw new IndexOutOfRangeException($"Index: {nameof(index)} must be in range of: {0} to {Count - 1}");
+                }
+                _Array[index] = value;
+                Count++;
+            }
+        }
+
+
+
 
         public bool Remove(T item)
         {
             bool success = false;
-            success= _Array.Remove(item);
+            success = _Array.Remove(item);
 
             if (success)
             {
@@ -113,7 +150,7 @@ namespace Assignment6
             }
 
             return success;
-            
+
         }
 
         #region IDisposable Support
