@@ -134,13 +134,27 @@ namespace Array.Tests
             }
 
 
+        }
+
+
+        [TestMethod]
+
+        public void Collection_Initializer()
+        {
+
+            Array<string> testArray = new Array<string>() { "one", "two", "three" };
+
+            Assert.IsTrue(testArray.Count == 3);
+
+
+
 
         }
 
 
 
         [TestMethod]
-        public void Foreach_Implemented()
+        public void Foreach_Returns_All_Items()
         {
             int size = 3;
 

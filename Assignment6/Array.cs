@@ -20,6 +20,11 @@ namespace Assignment6
             _Array = new List<T>();
         }
 
+        public Array()
+        {
+            _Array = new List<T>();
+        }
+
         public int Count { get; private set; } = 0;
 
         public bool IsReadOnly => throw new NotImplementedException();
@@ -30,7 +35,7 @@ namespace Assignment6
 
         public void Add(T item)
         {
-            if (Count >= Capacity)
+            if (Count >= Capacity&& Capacity!=0)
             {
                 throw new IndexOutOfRangeException("Array is Full");
             }
