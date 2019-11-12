@@ -5,6 +5,6 @@ namespace Assignment6
 {
     public class Array<T>
     {
-        
+        //comment
     }
 }

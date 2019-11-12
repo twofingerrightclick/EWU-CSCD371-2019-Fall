@@ -3,3 +3,6 @@
 ################################################################################
 
 /.vs/Assignment6/v16
+/Assignment6/obj/Debug/netstandard2.1
+/Assignment6/obj/Assignment6.csproj.nuget.cache
+/Assignment6/obj
