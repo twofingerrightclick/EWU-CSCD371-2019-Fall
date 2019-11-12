@@ -40,7 +40,7 @@ namespace Array.Tests
         public void Exception_When_Item_Isnt_Present_Array_Empty()
         {
 
-            Array<string> testArray = new Array<string>(0);
+            Array<string> testArray = new Array<string>(1);
             testArray.Contains("Inigo");
 
 

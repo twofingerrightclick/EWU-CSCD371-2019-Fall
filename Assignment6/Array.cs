@@ -55,7 +55,7 @@ namespace Assignment6
 
         public bool Contains(T item)
         {
-            if (Count >= Capacity)
+            if (Count > Capacity)
             {
                 throw new InvalidOperationException($"{nameof(item)} was not found");
 
