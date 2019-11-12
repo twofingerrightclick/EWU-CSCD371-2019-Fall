@@ -6,3 +6,11 @@
 /Assignment6/obj/Debug/netstandard2.1
 /Assignment6/obj/Assignment6.csproj.nuget.cache
 /Assignment6/obj
+/Array.Tests/bin/Release/netcoreapp3.0
+/Array.Tests/obj/Release/netcoreapp3.0
+/Array.Tests/obj/project.assets.json
+/Array.Tests/obj/Array.Tests.csproj.nuget.g.targets
+/Array.Tests/obj/Array.Tests.csproj.nuget.g.props
+/Array.Tests/obj/Array.Tests.csproj.nuget.dgspec.json
+/Array.Tests/obj/Array.Tests.csproj.nuget.cache
+/Assignment6/bin
