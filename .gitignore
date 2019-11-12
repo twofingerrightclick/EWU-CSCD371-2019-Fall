@@ -14,3 +14,5 @@
 /Array.Tests/obj/Array.Tests.csproj.nuget.dgspec.json
 /Array.Tests/obj/Array.Tests.csproj.nuget.cache
 /Assignment6/bin
+/Array.Tests/bin/Debug/netcoreapp3.0
+/Array.Tests/obj/Debug/netcoreapp3.0

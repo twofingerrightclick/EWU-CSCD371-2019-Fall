@@ -31,8 +31,6 @@ namespace Assignment6
 
       
 
-        //object IEnumerator.Current => throw new NotImplementedException();
-
         public void Add(T item)
         {
             if (Count >= Capacity&& Capacity!=0)
@@ -44,8 +42,8 @@ namespace Assignment6
                 throw new ArgumentNullException(nameof(item), "Cannot Add Null Item Reference");
             }
 
-            Count++;
             _Array.Add(item);
+            Count++;
 
 
 
@@ -106,7 +104,16 @@ namespace Assignment6
 
         public bool Remove(T item)
         {
-            throw new NotImplementedException();
+            bool success = false;
+            success= _Array.Remove(item);
+
+            if (success)
+            {
+                Count--;
+            }
+
+            return success;
+            
         }
 
         #region IDisposable Support

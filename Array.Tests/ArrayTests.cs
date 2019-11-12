@@ -61,7 +61,7 @@ namespace Array.Tests
 
         [TestMethod]
         
-        public void True_When_Item_Is_Found()
+        public void Contains_Returns_True_When_Item_Is_Found()
         {
 
             Array<string> testArray = new Array<string>(1);
@@ -69,7 +69,7 @@ namespace Array.Tests
             testArray.Add(name);
             Assert.IsTrue(testArray.Contains(name));
 
-
+  
         }
 
 
@@ -148,6 +148,43 @@ namespace Array.Tests
 
 
 
+
+        }
+
+
+        [TestMethod]
+       
+        public void Remove_Returns_True_Decrements_Count()
+        {
+            int genericSize = 2;
+            
+            Array<string> testArray = new Array<string>(genericSize);
+
+            string testString = "montoya";
+
+            testArray.Add(testString);
+            Assert.IsTrue(testArray.Remove(testString));
+            Assert.IsTrue(testArray.Count == 0);
+
+        }
+
+        [TestMethod]
+
+        public void Remove_Returns_False_Count_Unchanged()
+        {
+            int genericSize = 2;
+
+            Array<string> testArray = new Array<string>(genericSize);
+
+            
+
+            string testString = "montoya";
+
+            string testString1 = "Inigo";
+
+            testArray.Add(testString);
+            Assert.IsFalse(testArray.Remove(testString1));
+            Assert.IsTrue(testArray.Count == 1);
 
         }
 
