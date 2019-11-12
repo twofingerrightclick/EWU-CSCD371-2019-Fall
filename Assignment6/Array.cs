@@ -51,7 +51,7 @@ namespace Assignment6
 
         public void Clear()
         {
-            _Array = new List<T>();
+            _Array.Clear();
             Count = 0;
             
         }

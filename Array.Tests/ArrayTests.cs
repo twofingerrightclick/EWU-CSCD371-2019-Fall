@@ -188,6 +188,24 @@ namespace Array.Tests
 
         }
 
+        [TestMethod]
+        public void Clear_Sets_Count_to_Zero_And_All_Items_Removed_And_Capacity_Same()
+        {
+            int capacity = 1;
+            Array<string> testArray = new Array<string>(capacity);
+            string name = "Montoya";
+            testArray.Add(name);
+
+            testArray.Clear();
+
+            Assert.IsTrue(testArray.Capacity == capacity,"capacity wasn't preserved");
+            Assert.IsTrue(testArray.Count == 0,"count not zero");
+            Assert.IsFalse(testArray.Remove(name),"name was still found");
+
+
+        }
+
+
 
 
         [TestMethod]
