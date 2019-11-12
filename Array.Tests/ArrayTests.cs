@@ -72,5 +72,36 @@ namespace Array.Tests
 
         }
 
+
+        [TestMethod]
+        public void Foreach_Implemented()
+        {
+            int size = 3;
+
+            string[] testArray = new string[] { "one", "two", "three" }; 
+
+            
+
+            Array<string> testArrayGeneric = new Array<string>(size);
+
+            foreach (string s in testArray)
+            {
+                testArrayGeneric.Add(s);
+            }
+
+            int i = 0;
+            foreach ( string itemFromGenericArray in testArrayGeneric ) {
+
+                Assert.IsTrue(itemFromGenericArray == testArray[i]);
+                i++;
+            }
+            
+
+
+        }
+
+
+
+
     }
 }
