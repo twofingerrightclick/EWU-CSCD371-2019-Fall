@@ -12,6 +12,10 @@ namespace Assignment6
 
         public Array(int capacity)
         {
+            if (capacity<=0)
+            {
+                throw new IndexOutOfRangeException($"{nameof(capacity)} must be greater than 0");
+            }
             Capacity = capacity;
             _Array = new List<T>();
         }
@@ -35,6 +39,7 @@ namespace Assignment6
                 throw new ArgumentNullException(nameof(item), "Cannot Add Null Item Reference");
             }
 
+            Count++;
             _Array.Add(item);
 
 
@@ -43,7 +48,9 @@ namespace Assignment6
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            _Array = new List<T>();
+            Count = 0;
+            
         }
 
         public bool Contains(T item)
@@ -64,7 +71,27 @@ namespace Assignment6
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            if (array is null)
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+
+            if (array.Length - arrayIndex <= 0)
+            {
+                throw new ArgumentOutOfRangeException($"{nameof(arrayIndex)}: { arrayIndex}");
+            }
+
+            if ((array.Length - arrayIndex) < Capacity)
+            {
+                throw new ArgumentOutOfRangeException($"more items in collection than { nameof(array)} can fit from index: {nameof(arrayIndex)} = { arrayIndex}");
+            }
+
+            
+            
+            for (int i=arrayIndex; i < Capacity; i++)
+            {
+                array[i] = _Array[i];
+            }
         }
 
         
@@ -121,13 +148,13 @@ namespace Assignment6
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return (IEnumerator<T>)GetEnumerator();
+            return GetEnumerator();
         }
 
         private class ArrayEnumerator : IEnumerator<T>
         {
             private List<T> _Array;
-            int position = -1;
+            int _Index = -1;
 
 
             public ArrayEnumerator(List<T> array)
@@ -141,7 +168,7 @@ namespace Assignment6
                 {
                     try
                     {
-                        return _Array[position];
+                        return _Array[_Index];
                     }
                     catch (IndexOutOfRangeException)
                     {
@@ -165,13 +192,13 @@ namespace Assignment6
 
             public bool MoveNext()
             {
-                position++;
-                return (position < _Array.Count);
+                _Index++;
+                return (_Index < _Array.Count);
             }
 
             public void Reset()
             {
-                position = -1;
+                _Index = -1;
             }
         }
     }

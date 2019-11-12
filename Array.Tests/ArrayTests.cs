@@ -74,6 +74,72 @@ namespace Array.Tests
 
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void CopyTo_Validates_Array_Is_Large_Enough_Exception_When_Not()
+        {
+            int genericSize = 2;
+            int copyArraySizeisSmaller = 1;
+            Array<string> testArray = new Array<string>(genericSize);
+
+            string[] copyArray= new string[copyArraySizeisSmaller];
+
+            testArray.CopyTo(copyArray, 0);
+
+           
+
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void CopyTo_Validates_Index_Is_Valid_For_Array()
+        {
+            int genericSize = 2;
+            int copyArraySize= 1;
+            Array<string> testArray = new Array<string>(genericSize);
+
+            string[] copyArray = new string[copyArraySize];
+
+            testArray.CopyTo(copyArray, copyArraySize);
+
+        }
+
+
+        [TestMethod]
+       
+        public void CopyTo_Copies_All_Items()
+        {
+            
+            Array<string> testArray = new Array<string>(2);
+
+            List<string> list = new List<string>();
+
+            list.Add("one");
+            list.Add("two");
+
+            foreach (string s in list) {
+                testArray.Add(s);
+            }
+
+            string[] copyArray = new string[testArray.Count];
+
+            testArray.CopyTo(copyArray, 0);
+
+            int i = 0;
+            foreach (string s in list)
+            {
+
+                Assert.IsTrue(s == copyArray[i]);
+                i++;
+            }
+
+
+
+        }
+
+
+
+        [TestMethod]
         public void Foreach_Implemented()
         {
             int size = 3;
