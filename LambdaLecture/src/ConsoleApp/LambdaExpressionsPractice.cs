@@ -37,6 +37,7 @@ namespace ConsoleApp
 
             public float currentTemp
             {
+                //
                 get { return currentTemp; }
                 set
                 {
