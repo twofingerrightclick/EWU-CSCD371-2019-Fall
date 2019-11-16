@@ -21,7 +21,7 @@ namespace Sorter.Tests
 
         public bool IsLess(int first, int second)
         {
-            return first > second;
+            return first < second;
         }
 
 
@@ -31,10 +31,19 @@ namespace Sorter.Tests
 
             int[] array = new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9 };
             
-            SortUtility sorter = new SortUtility(S: IsGreater);
+            SortUtility sorter = new SortUtility(sortBy: IsGreater);
             int n = array.Length-1;
 
             sorter.QuickSort(array,0,n);
+
+            foreach (int i in array)
+            {
+                Console.Write(i);
+
+            }
+            Console.WriteLine();
+            sorter.SortBy = IsLess;
+            sorter.QuickSort(array, 0, n);
 
             foreach (int i in array)
             {

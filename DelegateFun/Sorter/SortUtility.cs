@@ -9,13 +9,15 @@ namespace Sorter
     {
 
 
+        public delegate bool _SortBy(int i, int j);
 
 
-        public Func<int, int, bool> SortBy { get; set; }
 
-        public SortUtility(Func<int, int, bool> sortThisWay)
+        public _SortBy SortBy { get; set; }
+
+        public SortUtility(_SortBy sortBy)
         {
-            SortBy = sortThisWay;
+            SortBy = sortBy;
 
 
         }
