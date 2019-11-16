@@ -1,10 +1,24 @@
 ﻿
 
 
+using System;
+
 namespace Sorter
 {
     public class SortUtility
     {
+
+
+
+
+        public Func<int, int, bool> SortBy { get; set; }
+
+        public SortUtility(Func<int, int, bool> sortThisWay)
+        {
+            SortBy = sortThisWay;
+
+
+        }
         // Sort method should be implemented here
         // It should accept an int[] and a delegate you define that performs the actual comparison
 
@@ -34,7 +48,7 @@ namespace Sorter
             for (int j = low; j <= high - 1; j++)
             {
                 // If current element is smaller than the pivot
-                if (arr[j] > pivot)
+                if (SortBy(arr[j] , pivot))
                 {
                     i++;    // increment index of smaller element
                     Swap(arr, i, j);
