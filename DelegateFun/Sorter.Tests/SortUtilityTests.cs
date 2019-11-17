@@ -1,11 +1,10 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sorter;
 using System;
 
 namespace Sorter.Tests
 {
-    
-    
+
+
 
 
     [TestClass]
@@ -14,41 +13,82 @@ namespace Sorter.Tests
 
         public delegate bool SortBy(int i, int j);
 
-        public bool IsGreater(int first, int second)
-    {
-        return first > second;
-    }
+        public bool Descending(int first, int second)
+        {
+            return first > second;
+        }
 
-        public bool IsLess(int first, int second)
+        public bool Asccending(int first, int second)
         {
             return first < second;
         }
 
 
+        int[] arrayAscending = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        int[] arrayDescending = new int[] { 9, 8, 7, 6, 5, 4, 3, 2, 1 };
+
+
         [TestMethod]
-        public void SortUtility_ShouldSortAscending_UsingAnAnonymousMethod()
+        public void SortUtility_ShouldSortAscending_UsingLambdaExpression()
         {
+            //setup
+            int[] array = arrayDescending;
 
-            int[] array = new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9 };
+            SortUtility sorter = new SortUtility(sortBy: (x,y)=>x<y);
             
-            SortUtility sorter = new SortUtility(sortBy: IsGreater);
-            int n = array.Length-1;
+            //sort
+            int n = array.Length - 1;
 
-            sorter.QuickSort(array,0,n);
-
-            foreach (int i in array)
+            sorter.QuickSort(array, 0, n);
+            //verify
+            for (int i = 0; i < array.Length; i++)
             {
-                Console.Write(i);
-
+                Assert.IsTrue(array[i] == arrayAscending[i]);
             }
-            Console.WriteLine();
-            sorter.SortBy = IsLess;
+
+        }
+
+
+        [TestMethod]
+        public void SortUtility_ShouldSortDescending_UsingLambdaStatement()
+        {
+            //setup
+            int[] array = arrayAscending;
+
+            Func< int, int, bool> sortByDescending = (x, y) => { return x > y; };
+
+            SortUtility sorter = new SortUtility(sortBy: sortByDescending);
+           //sort
+            int n = array.Length - 1;
+
+            sorter.QuickSort(array, 0, n);
+            //verify
+            for (int i = 0; i < array.Length; i++)
+            {
+                Assert.IsTrue(array[i] == arrayDescending[i]);
+            }
+
+        }
+
+
+
+        [TestMethod]
+        public void SortUtility_ShouldSortDescending_UsingAnonymousMethod()
+        {
+            //setup
+            int[] array = arrayAscending;
+
+            SortUtility sorter = new SortUtility(sortBy: Descending);
+
+            //sort
+
+            int n = array.Length - 1;
             sorter.QuickSort(array, 0, n);
 
-            foreach (int i in array)
+            //verify
+            for (int i = 0; i < array.Length; i++)
             {
-                Console.Write(i);
-
+                Assert.IsTrue(array[i] == arrayDescending[i]);
             }
 
         }
