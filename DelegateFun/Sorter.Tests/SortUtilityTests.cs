@@ -55,9 +55,9 @@ namespace Sorter.Tests
             //setup
             int[] array = arrayAscending;
 
-            Func< int, int, bool> sortByDescending = (x, y) => { return x > y; };
+            
 
-            SortUtility sorter = new SortUtility(sortBy: sortByDescending);
+            SortUtility sorter = new SortUtility(sortBy: (x, y) => { return x > y; });
            //sort
             int n = array.Length - 1;
 
@@ -78,7 +78,10 @@ namespace Sorter.Tests
             //setup
             int[] array = arrayAscending;
 
-            SortUtility sorter = new SortUtility(sortBy: Descending);
+            SortUtility sorter = new SortUtility(sortBy: delegate(int first, int second)
+        {
+            return first < second;
+        });
 
             //sort
 
