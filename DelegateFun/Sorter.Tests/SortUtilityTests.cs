@@ -78,9 +78,25 @@ namespace Sorter.Tests
             //setup
             int[] array = arrayAscending;
 
+            int[] expectedOutput = new int[] { 2,4,6,8,1,3,5,7,9 };
+
             SortUtility sorter = new SortUtility(sortBy: delegate(int first, int second)
         {
-            return first < second;
+            if (first % 2 == 0 && second % 2 == 0)
+            {
+                return first < second;
+            }
+            if (first % 2 != 0 && second % 2 != 0) {
+                return first<second;
+
+            }
+            if (first % 2 ==0)
+            {
+                return true;
+
+            }
+            else
+                return false;
         });
 
             //sort
@@ -91,7 +107,8 @@ namespace Sorter.Tests
             //verify
             for (int i = 0; i < array.Length; i++)
             {
-                Assert.IsTrue(array[i] == arrayDescending[i]);
+                Console.Write(array[i]);
+                Assert.IsTrue(array[i] == expectedOutput[i]);
             }
 
         }
