@@ -20,8 +20,21 @@ namespace Sorter
         // It should accept an int[] and a delegate you define that performs the actual comparison
 
         /* low  --> Starting index,  high  --> Ending index */
-        public void QuickSort(int[] arr, int low, int high)
+
+        public void Sort(int[] arr)
         {
+            if (arr is null)
+            {
+                throw new ArgumentNullException(nameof(arr));
+            }
+
+            QuickSort(arr, 0, arr.Length - 1);
+        }
+
+
+            private void QuickSort(int[] arr, int low, int high)
+        {
+            
             if (low < high)
             {
                 /* pi is partitioning index, arr[pi] is now
