@@ -73,7 +73,7 @@ namespace Sorter.Tests
 
 
         [TestMethod]
-        public void SortUtility_ShouldSortDescending_UsingAnonymousMethod()
+        public void SortUtility_ShouldSortEvensThenOddsAscending_UsingAnonymousMethod()
         {
             //setup
             int[] array = arrayAscending;
