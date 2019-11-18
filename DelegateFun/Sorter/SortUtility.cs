@@ -12,9 +12,9 @@ namespace Sorter
 
         public SortByDelegate SortBy { get; set; }
 
-        public SortUtility(Func<int,int,bool> sortBy)
+        public SortUtility(SortByDelegate sortBy)
         {
-            SortBy = new SortByDelegate(sortBy);
+            SortBy = sortBy;
         }
         // Sort method should be implemented here
         // It should accept an int[] and a delegate you define that performs the actual comparison
