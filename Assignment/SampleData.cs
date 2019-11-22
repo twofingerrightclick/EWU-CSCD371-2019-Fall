@@ -1,5 +1,4 @@
-﻿using FileHelpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,8 +17,8 @@ namespace Assignment
         public SampleData(string filePath)
         {
             PeopleFilePath = filePath;
-           _HeaderIndexes = new HeaderIndexes(filePath);
-    }
+            _HeaderIndexes = new HeaderIndexes(filePath);
+        }
 
         public SampleData()
         {
@@ -27,14 +26,14 @@ namespace Assignment
         }
 
         public IEnumerable<string> CsvRows
-        {   
+        {
             get
             {
                 IEnumerable<string> lines = File.ReadAllLines(PeopleFilePath).Where(item =>
                 {
                     if (item.StartsWith("0"))
                     {
-                       
+
                         return false;
                     }
 
@@ -45,7 +44,6 @@ namespace Assignment
             }
         }
 
-        IEnumerable<IPerson> ISampleData.People => throw new NotImplementedException();
 
         // 1.
         //public IEnumerable<string> CsvRows() { throw new NotImplementedException(); }
@@ -78,18 +76,40 @@ namespace Assignment
         }
 
         // 4.
-        public IEnumerable<IPerson> People()
+        public IEnumerable<IPerson> People
         {
+            get
+            {
+                IEnumerable<IPerson> peopleQuery = CsvRows.Select(line =>
+                {
 
-            var engine = new FileHelperEngine<Person>();
+                    string[] columns = line.Split(',');
+                    return new Person()
+                    {   
+                   
+                        FirstName = columns[_HeaderIndexes.FirstName],
+                        LastName = columns[_HeaderIndexes.LastName],
+                        Email = columns[_HeaderIndexes.Email],
 
-            string fileAdress = @"C:\Users\saffron\source\repos\Cscd371 c#\EWU-CSCD371-2019-Fall\Assignment\People.csv";
+                        StreetAddress = columns[_HeaderIndexes.StreetAddress],
+                        City = columns[_HeaderIndexes.City],
+                        State = columns[_HeaderIndexes.State],
+                        Zip = columns[_HeaderIndexes.Zip],
 
-            var result = engine.ReadFile(fileAdress);
+                        Address= new Address {
+                            StreetAddress = columns[_HeaderIndexes.StreetAddress],
+                            City = columns[_HeaderIndexes.City],
+                            State = columns[_HeaderIndexes.State],
+                            Zip = columns[_HeaderIndexes.Zip],
+                        }
+                    };
+                }).OrderBy(item => item.LastName);
+                //must end with select or group
 
-            IEnumerable<IPerson> people = result;
+                //IEnumerable<IPerson> people = result;
 
-            return people;
+                return peopleQuery;
+            }
 
         }
 
@@ -104,7 +124,7 @@ namespace Assignment
         public IEnumerable<IPerson> GroupByState()
         {
 
-            IEnumerable<IPerson> people = People();
+            IEnumerable<IPerson> people = People;
 
 
 

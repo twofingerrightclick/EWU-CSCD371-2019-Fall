@@ -17,7 +17,7 @@ namespace AggregateTests
             SampleData sampleData = new SampleData();
 
 
-            IEnumerable<IPerson> people = sampleData.People();
+            IEnumerable<IPerson> people = sampleData.People;
 
             //var peoplefromWA = people.Select(person =>  );
 
@@ -84,7 +84,7 @@ namespace AggregateTests
 
         }
 
-
+   //to do :
 
         [TestMethod]
         public void Gets_DistinctList_Of_States_Using_Linq_To_Verify()
@@ -114,7 +114,7 @@ namespace AggregateTests
 
         }
 
-
+//end to do/
 
         [TestMethod]
         public void Gets_String_With_Unique_States()

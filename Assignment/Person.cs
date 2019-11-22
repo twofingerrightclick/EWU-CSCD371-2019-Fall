@@ -18,6 +18,6 @@ namespace Assignment
         public string State { get; set; }
         public string Zip { get; set; }
 
-        //public Address Address { get;set; }
+        public Address Address { get;set; }
     }
 }
