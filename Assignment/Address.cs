@@ -1,5 +1,10 @@
-﻿namespace Assignment
+﻿using FileHelpers;
+
+namespace Assignment
 {
+  
+
+    [DelimitedRecord(",")]
     public class Address : IAddress
     {
         public string StreetAddress { get; set; }
