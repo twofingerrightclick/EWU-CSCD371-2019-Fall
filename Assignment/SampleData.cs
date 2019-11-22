@@ -11,16 +11,30 @@ namespace Assignment
     public class SampleData : ISampleData
     {
         public string PeopleFilePath { get; set; } = @"C:\Users\saffron\source\repos\Cscd371 c#\EWU-CSCD371-2019-Fall\Assignment\People.csv";
-        public List<string> Headers { get; set; } = null;
-        public IEnumerable<string> CsvRows
+        //public List<string> Headers { get; set; } = null;
+
+        private HeaderIndexes _HeaderIndexes;
+
+        public SampleData(string filePath)
         {
+            PeopleFilePath = filePath;
+           _HeaderIndexes = new HeaderIndexes(filePath);
+    }
+
+        public SampleData()
+        {
+            _HeaderIndexes = new HeaderIndexes(PeopleFilePath);
+        }
+
+        public IEnumerable<string> CsvRows
+        {   
             get
             {
                 IEnumerable<string> lines = File.ReadAllLines(PeopleFilePath).Where(item =>
                 {
-                    if (Headers == null)
+                    if (item.StartsWith("0"))
                     {
-                        Headers = item.Split(',').ToList();
+                       
                         return false;
                     }
 
@@ -41,10 +55,10 @@ namespace Assignment
         {
             IEnumerable<string> distinctStates = CsvRows.Select(item =>
             {
-                return  item.Split(',')[Headers.IndexOf("State")];
+                return item.Split(',')[_HeaderIndexes.State];
 
-               
-            }).Distinct().OrderBy(item=> item);
+
+            }).Distinct().OrderBy(item => item);
 
             //IEnumerable<string> distinctStates = from item in CsvRows where item.Split(',')[Headers.IndexOf("State")] select  ;
 
@@ -54,7 +68,14 @@ namespace Assignment
 
         // 3.
         public string GetAggregateSortedListOfStatesUsingCsvRows()
-            => throw new NotImplementedException();
+        {
+            IEnumerable<string> uniqueStatesQuery = GetUniqueSortedListOfStatesGivenCsvRows();
+
+            string result = string.Join(",", uniqueStatesQuery);
+
+            return result;
+
+        }
 
         // 4.
         public IEnumerable<IPerson> People()
@@ -111,4 +132,47 @@ namespace Assignment
         }
     }
 
+    public class HeaderIndexes
+    {
+
+
+        public int Id { get; }
+        public int FirstName { get; }
+        public int LastName { get; }
+        public int Email { get; }
+        public int StreetAddress { get; }
+        public int City { get; }
+        public int State { get; }
+        public int Zip { get; }
+
+        public HeaderIndexes(string peopleFilePath)
+        {
+            string headerLine;
+
+
+            using StreamReader file =
+                new StreamReader(peopleFilePath);
+            while ((headerLine = file.ReadLine()) != null)
+            {
+
+            }
+
+            file.Close();
+
+            string[] headerIndexs = headerLine.Split(',');
+
+            Id = headerLine.IndexOf("Id");
+            FirstName = headerLine.IndexOf("FirstName");
+            LastName = headerLine.IndexOf("LastName");
+            Email = headerLine.IndexOf("Email");
+            StreetAddress = headerLine.IndexOf("StreetAddress");
+            City = headerLine.IndexOf("City");
+            State = headerLine.IndexOf("State");
+            Zip = headerLine.IndexOf("Zip");
+
+
+
+
+        }
+    }
 }

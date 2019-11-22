@@ -36,7 +36,7 @@ namespace AggregateTests
         public void CSVRows_ReturnsAll_Rows_Excluding_Header()
         {
 
-            SampleData sampleData = new SampleData();
+            SampleData sampleData = new SampleData(@"C:\Users\saffron\source\repos\Cscd371 c#\EWU-CSCD371-2019-Fall\AggregateTests\TestPeople.csv");
 
 
             IEnumerable<string> people = sampleData.CsvRows;
@@ -56,11 +56,11 @@ namespace AggregateTests
 
 
         [TestMethod]
-        public void Gets_DistinctList_Of_States()
+        public void Gets_DistinctList_Of_States_Using_HardCodedList()
         {
 
-            SampleData sampleData = new SampleData();
-            sampleData.PeopleFilePath = @"C:\Users\saffron\source\repos\Cscd371 c#\EWU-CSCD371-2019-Fall\AggregateTests\TestPeople.csv";
+            SampleData sampleData = new SampleData(@"C:\Users\saffron\source\repos\Cscd371 c#\EWU-CSCD371-2019-Fall\AggregateTests\TestPeople.csv");
+            
 
             List<String> hardCodedStatesFromTestCSV = new List<string>() { "CA", "WA", "AL" };
             
@@ -75,6 +75,64 @@ namespace AggregateTests
             }
 
 
+            for (int i = 0; i < hardCodedStatesFromTestCSV.Count; i++)
+            {
+                Assert.IsTrue(hardCodedStatesFromTestCSV[i] == orderedStates[i]);
+
+            }
+
+
+        }
+
+
+
+        [TestMethod]
+        public void Gets_DistinctList_Of_States_Using_Linq_To_Verify()
+        {
+
+            SampleData sampleData = new SampleData(@"C:\Users\saffron\source\repos\Cscd371 c#\EWU-CSCD371-2019-Fall\AggregateTests\TestPeople.csv");
+
+            List<String> hardCodedStatesFromTestCSV = new List<string>() { "CA", "WA", "AL" };
+
+            hardCodedStatesFromTestCSV.Sort();
+
+            IEnumerable<string> states = sampleData.GetUniqueSortedListOfStatesGivenCsvRows();
+            List<string> orderedStates = new List<string>();
+
+            foreach (var item in states)
+            {
+                orderedStates.Add(item);
+            }
+
+
+            for (int i = 0; i < hardCodedStatesFromTestCSV.Count; i++)
+            {
+                Assert.IsTrue(hardCodedStatesFromTestCSV[i] == orderedStates[i]);
+
+            }
+
+
+        }
+
+
+
+        [TestMethod]
+        public void Gets_String_With_Unique_States()
+        {
+
+            SampleData sampleData = new SampleData(@"C:\Users\saffron\source\repos\Cscd371 c#\EWU-CSCD371-2019-Fall\AggregateTests\TestPeople.csv");
+
+            List<String> hardCodedStatesFromTestCSV = new List<string>() { "CA", "WA", "AL" };
+
+            hardCodedStatesFromTestCSV.Sort();
+
+            string result = sampleData.GetAggregateSortedListOfStatesUsingCsvRows();
+
+            string[] orderedStates = result.Split(',');
+
+            Console.WriteLine(result);
+
+           
             for (int i = 0; i < hardCodedStatesFromTestCSV.Count; i++)
             {
                 Assert.IsTrue(hardCodedStatesFromTestCSV[i] == orderedStates[i]);

@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <None Update="TestPeople.csv">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
