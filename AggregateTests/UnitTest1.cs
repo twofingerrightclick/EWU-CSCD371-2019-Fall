@@ -25,7 +25,7 @@ namespace AggregateTests
 
             foreach (IPerson person in people)
             {
-                Console.WriteLine($"{ person.State}, {person.LastName}");
+                Console.WriteLine($"{ person.Address.State}, {person.LastName}");
 
             }
         }

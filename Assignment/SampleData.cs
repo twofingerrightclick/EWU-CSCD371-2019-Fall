@@ -81,12 +81,10 @@ namespace Assignment
 
                         FirstName = columns[_HeaderIndexes.FirstName],
                         LastName = columns[_HeaderIndexes.LastName],
-                        Email = columns[_HeaderIndexes.Email],
+                        EmailAddress = columns[_HeaderIndexes.Email],
 
                         StreetAddress = columns[_HeaderIndexes.StreetAddress],
-                        City = columns[_HeaderIndexes.City],
-                        State = columns[_HeaderIndexes.State],
-                        Zip = columns[_HeaderIndexes.Zip],
+                       
 
                         Address = new Address
                         {
@@ -123,7 +121,7 @@ namespace Assignment
 
             IEnumerable<IGrouping<string, IPerson>> query =
                 from person in people
-                group person by person.State;
+                group person by person.Address.State;
 
             List<IPerson> peopleCollection = new List<IPerson>();
 
@@ -137,7 +135,7 @@ namespace Assignment
 
             foreach (IPerson person in peopleCollection)
             {
-                Console.WriteLine($"{ person.State}, {person.LastName}");
+                Console.WriteLine($"{ person.Address.State}, {person.LastName}");
             }
 
 
