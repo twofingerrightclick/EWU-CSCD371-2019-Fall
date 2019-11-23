@@ -36,7 +36,8 @@ namespace AggregateTests
         public void CSVRows_ReturnsAll_Rows_Excluding_Header()
         {
 
-            SampleData sampleData = new SampleData(@"C:\Users\saffron\source\repos\Cscd371 c#\EWU-CSCD371-2019-Fall\AggregateTests\TestPeople.csv");
+            string testFilePath = @"C:\Users\saffron\source\repos\Cscd371 c#\EWU-CSCD371-2019-Fall\AggregateTests\TestPeople.csv";
+            SampleData sampleData = new SampleData(testFilePath);
 
 
             IEnumerable<string> people = sampleData.CsvRows;
@@ -49,7 +50,7 @@ namespace AggregateTests
 
             
 
-            Assert.IsTrue(count==File.ReadAllLines(sampleData.PeopleFilePath).Length - 1);
+            Assert.IsTrue(count==File.ReadAllLines(testFilePath).Length - 1);
 
             
         }
@@ -72,6 +73,7 @@ namespace AggregateTests
             foreach (var item in states)
             {
                 orderedStates.Add(item);
+                Console.WriteLine(item);
             }
 
 

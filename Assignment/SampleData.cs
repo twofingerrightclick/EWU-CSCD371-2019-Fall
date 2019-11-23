@@ -9,8 +9,9 @@ namespace Assignment
 
     public class SampleData : ISampleData
     {
-        public string PeopleFilePath { get; set; } = @"C:\Users\saffron\source\repos\Cscd371 c#\EWU-CSCD371-2019-Fall\Assignment\People.csv";
-        //public List<string> Headers { get; set; } = null;
+        //public string PeopleFilePath { get; set; } = @"C:\Users\saffron\source\repos\Cscd371 c#\EWU-CSCD371-2019-Fall\Assignment\People.csv";
+        public string PeopleFilePath { get; set; } = @"People.csv";
+
 
         private HeaderIndexes _HeaderIndexes;
 
@@ -31,14 +32,8 @@ namespace Assignment
             {
                 IEnumerable<string> lines = File.ReadAllLines(PeopleFilePath).Where(item =>
                 {
-                    if (item.StartsWith("0"))
-                    {
-
-                        return false;
-                    }
-
                     return !string.IsNullOrWhiteSpace(item);
-                });
+                }).Skip(1); //skip first lne (the header)
 
                 return lines;
             }
@@ -85,8 +80,8 @@ namespace Assignment
 
                     string[] columns = line.Split(',');
                     return new Person()
-                    {   
-                   
+                    {
+
                         FirstName = columns[_HeaderIndexes.FirstName],
                         LastName = columns[_HeaderIndexes.LastName],
                         Email = columns[_HeaderIndexes.Email],
@@ -96,7 +91,8 @@ namespace Assignment
                         State = columns[_HeaderIndexes.State],
                         Zip = columns[_HeaderIndexes.Zip],
 
-                        Address= new Address {
+                        Address = new Address
+                        {
                             StreetAddress = columns[_HeaderIndexes.StreetAddress],
                             City = columns[_HeaderIndexes.City],
                             State = columns[_HeaderIndexes.State],
@@ -170,25 +166,20 @@ namespace Assignment
             string headerLine;
 
 
-            using StreamReader file =
-                new StreamReader(peopleFilePath);
-            while ((headerLine = file.ReadLine()) != null)
-            {
-
-            }
-
+            using StreamReader file = new StreamReader(peopleFilePath);
+            headerLine = file.ReadLine();
             file.Close();
 
-            string[] headerIndexs = headerLine.Split(',');
+            List<string> headerIndexes = headerLine.Split(',').ToList();
 
-            Id = headerLine.IndexOf("Id");
-            FirstName = headerLine.IndexOf("FirstName");
-            LastName = headerLine.IndexOf("LastName");
-            Email = headerLine.IndexOf("Email");
-            StreetAddress = headerLine.IndexOf("StreetAddress");
-            City = headerLine.IndexOf("City");
-            State = headerLine.IndexOf("State");
-            Zip = headerLine.IndexOf("Zip");
+            Id = headerIndexes.IndexOf("Id");
+            FirstName = headerIndexes.IndexOf("FirstName");
+            LastName = headerIndexes.IndexOf("LastName");
+            Email = headerIndexes.IndexOf("Email");
+            StreetAddress = headerIndexes.IndexOf("StreetAddress");
+            City = headerIndexes.IndexOf("City");
+            State = headerIndexes.IndexOf("State");
+            Zip = headerIndexes.IndexOf("Zip");
 
 
 
