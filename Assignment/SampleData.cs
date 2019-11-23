@@ -34,7 +34,7 @@ namespace Assignment
                 IEnumerable<string> lines = File.ReadAllLines(PeopleFilePath).Where(item =>
                 {
                     return !string.IsNullOrWhiteSpace(item);
-                }).Skip(1); //skip first lne (the header)
+                }).Skip(1); //skip first line (the header)
 
                 return lines;
             }
@@ -82,9 +82,6 @@ namespace Assignment
                         FirstName = columns[_HeaderIndexes.FirstName],
                         LastName = columns[_HeaderIndexes.LastName],
                         EmailAddress = columns[_HeaderIndexes.Email],
-
-                        StreetAddress = columns[_HeaderIndexes.StreetAddress],
-                       
 
                         Address = new Address
                         {
