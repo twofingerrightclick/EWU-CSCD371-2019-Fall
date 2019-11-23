@@ -7,8 +7,10 @@ using System.IO;
 namespace AggregateTests
 {
     [TestClass]
-    public class UnitTest1
+    public class SampleDataTests
     {
+
+        private string _TestFilePath = @"C:\Users\saffron\source\repos\Cscd371 c#\EWU-CSCD371-2019-Fall\AggregateTests\TestPeople.csv";
 
         [TestMethod]
         public void TestMethod1()
@@ -36,8 +38,8 @@ namespace AggregateTests
         public void CSVRows_ReturnsAll_Rows_Excluding_Header()
         {
 
-            string testFilePath = @"C:\Users\saffron\source\repos\Cscd371 c#\EWU-CSCD371-2019-Fall\AggregateTests\TestPeople.csv";
-            SampleData sampleData = new SampleData(testFilePath);
+            
+            SampleData sampleData = new SampleData(_TestFilePath);
 
 
             IEnumerable<string> people = sampleData.CsvRows;
@@ -50,7 +52,7 @@ namespace AggregateTests
 
             
 
-            Assert.IsTrue(count==File.ReadAllLines(testFilePath).Length - 1);
+            Assert.IsTrue(count==File.ReadAllLines(_TestFilePath).Length - 1);
 
             
         }
@@ -60,7 +62,7 @@ namespace AggregateTests
         public void Gets_DistinctList_Of_States_Using_HardCodedList()
         {
 
-            SampleData sampleData = new SampleData(@"C:\Users\saffron\source\repos\Cscd371 c#\EWU-CSCD371-2019-Fall\AggregateTests\TestPeople.csv");
+            SampleData sampleData = new SampleData(_TestFilePath);
             
 
             List<String> hardCodedStatesFromTestCSV = new List<string>() { "CA", "WA", "AL" };
@@ -92,7 +94,7 @@ namespace AggregateTests
         public void Gets_DistinctList_Of_States_Using_Linq_To_Verify()
         {
 
-            SampleData sampleData = new SampleData(@"C:\Users\saffron\source\repos\Cscd371 c#\EWU-CSCD371-2019-Fall\AggregateTests\TestPeople.csv");
+            SampleData sampleData = new SampleData(_TestFilePath);
 
             List<String> hardCodedStatesFromTestCSV = new List<string>() { "CA", "WA", "AL" };
 
@@ -122,7 +124,7 @@ namespace AggregateTests
         public void Gets_String_With_Unique_States()
         {
 
-            SampleData sampleData = new SampleData(@"C:\Users\saffron\source\repos\Cscd371 c#\EWU-CSCD371-2019-Fall\AggregateTests\TestPeople.csv");
+            SampleData sampleData = new SampleData(_TestFilePath);
 
             List<String> hardCodedStatesFromTestCSV = new List<string>() { "CA", "WA", "AL" };
 

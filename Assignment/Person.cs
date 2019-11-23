@@ -1,12 +1,7 @@
-﻿using FileHelpers;
-
-
+﻿
 namespace Assignment
 {
 
-
-
-    [DelimitedRecord(",")]
     public class Person : IPerson
     {
         public string ID { get; set; }

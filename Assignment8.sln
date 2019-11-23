@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assignment", "Assignment\As
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assignment.Interfaces", "Assignment.Interfaces\Assignment.Interfaces.csproj", "{6C4185C8-3398-49F8-B147-3B4418E2F922}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateTests", "AggregateTests\AggregateTests.csproj", "{CCA92349-6F38-43F7-9860-E639DEEB83B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assignment8Tests", "AggregateTests\Assignment8Tests.csproj", "{CCA92349-6F38-43F7-9860-E639DEEB83B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

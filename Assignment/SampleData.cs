@@ -95,10 +95,7 @@ namespace Assignment
                         }
                     };
                 }).OrderBy(item => item.LastName);
-                //must end with select or group
-
-                //IEnumerable<IPerson> people = result;
-
+             
                 return peopleQuery;
             }
 
