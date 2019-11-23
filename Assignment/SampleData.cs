@@ -26,6 +26,7 @@ namespace Assignment
             _HeaderIndexes = new HeaderIndexes(PeopleFilePath);
         }
 
+        // 1.
         public IEnumerable<string> CsvRows
         {
             get
@@ -38,11 +39,7 @@ namespace Assignment
                 return lines;
             }
         }
-
-
-        // 1.
-        //public IEnumerable<string> CsvRows() { throw new NotImplementedException(); }
-
+       
         // 2.
         public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows()
         {
