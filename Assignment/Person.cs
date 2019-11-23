@@ -17,7 +17,8 @@ namespace Assignment
         public string City { get; set; }
         public string State { get; set; }
         public string Zip { get; set; }
+        public IAddress Address { get;set; }
 
-        public Address Address { get;set; }
+        public string EmailAddress { get; set; }
     }
 }
