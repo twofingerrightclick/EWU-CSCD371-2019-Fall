@@ -2,7 +2,10 @@ using Assignment;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 
 namespace AggregateTests
 {
@@ -13,32 +16,80 @@ namespace AggregateTests
         private string _TestFilePath = @"C:\Users\saffron\source\repos\Cscd371 c#\EWU-CSCD371-2019-Fall\AggregateTests\TestPeople.csv";
 
         [TestMethod]
-        public void TestMethod1()
+        public void All_Person_Properties_Are_Filled_Correctly_No_Nulls()
         {
 
-            SampleData sampleData = new SampleData();
-
+            SampleData sampleData = new SampleData(_TestFilePath);
 
             IEnumerable<IPerson> people = sampleData.People;
-
-            //var peoplefromWA = people.Select(person =>  );
-
 
 
             foreach (IPerson person in people)
             {
-                Console.WriteLine($"{ person.Address.State}, {person.LastName}");
 
+
+                IEnumerable<PropertyInfo> personProperties = person.GetType().GetProperties();
+
+                //done this way to practice with linq and reflection
+
+                bool nullsInPersonProperties = personProperties.Where(propertyInfo => propertyInfo.PropertyType == typeof(string))
+                .Select(propertyInfo => { return ((string)propertyInfo.GetValue(person), propertyInfo); })
+                .Any((valueAndProperty) =>
+                {
+                    if (string.IsNullOrEmpty(valueAndProperty.Item1))
+                    {
+                        Trace.WriteLine($"Person { valueAndProperty.propertyInfo} was null or empty");
+                        return true;
+                    }
+                    return false;
+                });
+
+
+
+                Assert.IsFalse(nullsInPersonProperties);
+             
             }
         }
 
+
+        [TestMethod]
+        public void All_Address_Properties_Are_Filled_Correctly_No_Nulls()
+        {
+
+            SampleData sampleData = new SampleData(_TestFilePath);
+
+            IEnumerable<IPerson> people = sampleData.People;
+
+
+            foreach (IPerson person in people)
+            {
+
+              
+                IEnumerable<PropertyInfo> personAddressProperties = person.Address.GetType().GetProperties();
+
+                bool nullsInPersonAddressProperties = personAddressProperties.Where(propertyInfo => propertyInfo.PropertyType == typeof(string))
+                .Select(propertyInfo => { return ((string)propertyInfo.GetValue(person.Address), propertyInfo); })
+                .Any((valueAndProperty) =>
+                {
+                    if (string.IsNullOrEmpty(valueAndProperty.Item1))
+                    {
+                        Trace.WriteLine($"Address { valueAndProperty.propertyInfo} was null or empty");
+                        return true;
+                    }
+                    return false;
+                });
+
+                Assert.IsFalse(nullsInPersonAddressProperties);
+
+            }
+        }
 
 
         [TestMethod]
         public void CSVRows_ReturnsAll_Rows_Excluding_Header()
         {
 
-            
+
             SampleData sampleData = new SampleData(_TestFilePath);
 
 
@@ -50,11 +101,11 @@ namespace AggregateTests
                 count++;
             }
 
-            
 
-            Assert.IsTrue(count==File.ReadAllLines(_TestFilePath).Length - 1);
 
-            
+            Assert.IsTrue(count == File.ReadAllLines(_TestFilePath).Length - 1);
+
+
         }
 
 
@@ -63,10 +114,10 @@ namespace AggregateTests
         {
 
             SampleData sampleData = new SampleData(_TestFilePath);
-            
+
 
             List<String> hardCodedStatesFromTestCSV = new List<string>() { "CA", "WA", "AL" };
-            
+
             hardCodedStatesFromTestCSV.Sort();
 
             IEnumerable<string> states = sampleData.GetUniqueSortedListOfStatesGivenCsvRows();
@@ -88,7 +139,7 @@ namespace AggregateTests
 
         }
 
-   //to do :
+        //to do :
 
         [TestMethod]
         public void Gets_DistinctList_Of_States_Using_Linq_To_Verify()
@@ -118,7 +169,7 @@ namespace AggregateTests
 
         }
 
-//end to do/
+        //end to do/
 
         [TestMethod]
         public void Gets_String_With_Unique_States()
@@ -136,7 +187,7 @@ namespace AggregateTests
 
             Console.WriteLine(result);
 
-           
+
             for (int i = 0; i < hardCodedStatesFromTestCSV.Count; i++)
             {
                 Assert.IsTrue(hardCodedStatesFromTestCSV[i] == orderedStates[i]);
