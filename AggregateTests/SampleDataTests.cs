@@ -13,13 +13,15 @@ namespace AggregateTests
     public class SampleDataTests
     {
 
-        private string _TestFilePath = @"C:\Users\saffron\source\repos\Cscd371 c#\EWU-CSCD371-2019-Fall\AggregateTests\TestPeople.csv";
+        //private string _TestFilePath = @"C:\Users\saffron\source\repos\Cscd371 c#\EWU-CSCD371-2019-Fall\AggregateTests\TestPeople.csv";
+       // C:\Users\saffron\source\repos\Cscd371 c#\EWU-CSCD371-2019-Fall\AggregateTests\TestPeople.csv
+        private string _TestFilePath=Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + @"\AggregateTests\"+ "TestPeople.csv";
 
         [TestMethod]
         public void All_Person_Properties_Are_Filled_Correctly_No_Nulls()
         {
 
-            SampleData sampleData = new SampleData(_TestFilePath);
+            SampleData sampleData = new SampleData();
 
             IEnumerable<IPerson> people = sampleData.People;
 
