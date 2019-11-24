@@ -9,8 +9,8 @@ namespace Assignment
 
     public class SampleData : ISampleData
     {
-        //public string PeopleFilePath { get; set; } = @"C:\Users\saffron\source\repos\Cscd371 c#\EWU-CSCD371-2019-Fall\Assignment\People.csv";
-        public string PeopleFilePath { get; set; } = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + @"\Assignment\" + "People.csv";
+        
+        public string PeopleFilePath { get; set; } = "People.csv";
 
 
         private HeaderIndexes _HeaderIndexes;
