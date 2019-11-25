@@ -13,40 +13,46 @@ namespace AggregateTests
     public class SampleDataTests
     {
 
-        //private string _TestFilePath = @"C:\Users\saffron\source\repos\Cscd371 c#\EWU-CSCD371-2019-Fall\AggregateTests\TestPeople.csv";
-       // C:\Users\saffron\source\repos\Cscd371 c#\EWU-CSCD371-2019-Fall\AggregateTests\TestPeople.csv
-        private string _TestFilePath= "TestPeople.csv";
+   
+        private string _TestFilePath = "TestPeople.csv";
+        private string _PropertyTestFilePath = "PropertyTestFile.csv";
+
+
 
         [TestMethod]
         public void All_Person_Properties_Are_Filled_Correctly_No_Nulls()
         {
 
-            SampleData sampleData = new SampleData();
+            SampleData sampleData = new SampleData(_PropertyTestFilePath);
 
             IEnumerable<IPerson> people = sampleData.People;
+
 
 
             foreach (IPerson person in people)
             {
 
-
                 IEnumerable<PropertyInfo> personProperties = person.GetType().GetProperties();
 
                 //done this way to practice with linq and reflection
 
-                bool nullsInPersonProperties = personProperties.Where(propertyInfo => propertyInfo.PropertyType == typeof(string))
-                .Select(propertyInfo => { return ((string)propertyInfo.GetValue(person), propertyInfo); })
+                bool nullsInPersonProperties = personProperties.Where(propertyInfo => {  return propertyInfo.PropertyType == typeof(string); })
+                .Select(propertyInfo => { return (value:(string)propertyInfo.GetValue(person), propertyInfo); })
                 .Any((valueAndProperty) =>
                 {
-                    if (string.IsNullOrEmpty(valueAndProperty.Item1))
+                    //not concerned about empty string values here.
+                    if (valueAndProperty.value == null) {
+                        Trace.WriteLine($"Person { valueAndProperty.propertyInfo} was null");
+                        return true;
+                    }
+                    
+                    if (valueAndProperty.propertyInfo.Name != valueAndProperty.value)
                     {
-                        Trace.WriteLine($"Person { valueAndProperty.propertyInfo} was null or empty");
+                        Trace.WriteLine($"Person { valueAndProperty.propertyInfo} was incorrectly assigned: {valueAndProperty.value}");
                         return true;
                     }
                     return false;
                 });
-
-
 
                 Assert.IsFalse(nullsInPersonProperties);
              
@@ -58,7 +64,7 @@ namespace AggregateTests
         public void All_Address_Properties_Are_Filled_Correctly_No_Nulls()
         {
 
-            SampleData sampleData = new SampleData(_TestFilePath);
+            SampleData sampleData = new SampleData(_PropertyTestFilePath);
 
             IEnumerable<IPerson> people = sampleData.People;
 
@@ -70,12 +76,18 @@ namespace AggregateTests
                 IEnumerable<PropertyInfo> personAddressProperties = person.Address.GetType().GetProperties();
 
                 bool nullsInPersonAddressProperties = personAddressProperties.Where(propertyInfo => propertyInfo.PropertyType == typeof(string))
-                .Select(propertyInfo => { return ((string)propertyInfo.GetValue(person.Address), propertyInfo); })
+                .Select(propertyInfo => { return (value:(string)propertyInfo.GetValue(person.Address), propertyInfo); })
                 .Any((valueAndProperty) =>
                 {
-                    if (string.IsNullOrEmpty(valueAndProperty.Item1))
+                    if (string.IsNullOrEmpty(valueAndProperty.value))
                     {
-                        Trace.WriteLine($"Address { valueAndProperty.propertyInfo} was null or empty");
+                        Trace.WriteLine($"Person { valueAndProperty.propertyInfo} was null or empty");
+                        return true;
+                    }
+
+                    if (valueAndProperty.propertyInfo.Name != valueAndProperty.value)
+                    {
+                        Trace.WriteLine($"Person { valueAndProperty.propertyInfo} was incorrectly assigned: {valueAndProperty.value}");
                         return true;
                     }
                     return false;

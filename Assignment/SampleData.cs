@@ -13,7 +13,7 @@ namespace Assignment
         public string PeopleFilePath { get; set; } = "People.csv";
 
 
-        private HeaderIndexes _HeaderIndexes;
+        public HeaderIndexes _HeaderIndexes;
 
         public SampleData(string filePath)
         {
