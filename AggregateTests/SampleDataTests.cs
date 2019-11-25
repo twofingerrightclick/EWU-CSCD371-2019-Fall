@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace AggregateTests
+namespace Assignment8Tests
 {
     [TestClass]
     public class SampleDataTests
@@ -105,7 +105,6 @@ namespace AggregateTests
 
             SampleData sampleData = new SampleData(_TestFilePath);
 
-
             IEnumerable<string> people = sampleData.CsvRows;
 
             int count = 0;
@@ -152,7 +151,7 @@ namespace AggregateTests
 
         }
 
-        //to do :
+      
 
         [TestMethod]
         public void Gets_DistinctList_Of_States_Using_Linq_To_Verify()
@@ -160,32 +159,21 @@ namespace AggregateTests
 
             SampleData sampleData = new SampleData(_TestFilePath);
 
-            List<String> hardCodedStatesFromTestCSV = new List<string>() { "CA", "WA", "AL" };
+            
 
-            hardCodedStatesFromTestCSV.Sort();
+            var uniqueListofStatesQuery = sampleData.GetUniqueSortedListOfStatesGivenCsvRows();
 
-            IEnumerable<string> states = sampleData.GetUniqueSortedListOfStatesGivenCsvRows();
-            List<string> orderedStates = new List<string>();
+            var uniqueListofStatesDistinctQuery = uniqueListofStatesQuery.Distinct();
 
-            foreach (var item in states)
-            {
-                orderedStates.Add(item);
-            }
-
-
-            for (int i = 0; i < hardCodedStatesFromTestCSV.Count; i++)
-            {
-                Assert.IsTrue(hardCodedStatesFromTestCSV[i] == orderedStates[i]);
-
-            }
+            Assert.IsTrue(uniqueListofStatesQuery.Count() == uniqueListofStatesDistinctQuery.Count());
 
 
         }
 
-        //end to do/
+       
 
         [TestMethod]
-        public void Gets_String_With_Unique_States()
+        public void Gets_String_With_Unique_States_Using_CSVROWS_Returns_Unique_Ordered_String()
         {
 
             SampleData sampleData = new SampleData(_TestFilePath);
@@ -207,6 +195,53 @@ namespace AggregateTests
 
             }
 
+
+        }
+
+
+        [TestMethod]
+        public void Gets_String_With_Unique_States_Using_PEOPLE_Returns_Unique_Ordered_String()
+        {
+
+            SampleData sampleData = new SampleData(_TestFilePath);
+
+            List<String> hardCodedStatesFromTestCSV = new List<string>() { "CA", "WA", "AL" };
+
+            hardCodedStatesFromTestCSV.Sort();
+
+            var peoples = sampleData.People;
+
+            string result = sampleData.GetAggregateListOfStatesGivenPeopleCollection(peoples);
+
+            string[] resultAsArray = result.Split(',');
+
+            for (int i = 0; i < hardCodedStatesFromTestCSV.Count; i++)
+            {
+                Assert.IsTrue(hardCodedStatesFromTestCSV[i] == resultAsArray[i]);
+
+            }
+
+
+        }
+
+
+        [TestMethod]
+        public void EmailAddressFilter_CorrectlyReturns_Tuples_That_Match_ThePredicate()
+        {
+
+            SampleData sampleData = new SampleData("EmailFilterTest.csv"); //contains 2 entries with firstname of Steve that should match 
+                                                                           //the criteria of the predicate.
+
+            Predicate <string> getAnyEmailthatIsGmail = s => s.Contains("gmail");
+
+            IEnumerable<(string FirstName, string LastName)> gmailQuery = sampleData.FilterByEmailAddress(getAnyEmailthatIsGmail);
+
+            Assert.IsTrue(gmailQuery.Count() == 2);
+            
+            foreach ((string firstName, string lastName) result in gmailQuery) {
+
+                Assert.IsTrue(result.firstName == "Steve");
+            }
 
         }
     }

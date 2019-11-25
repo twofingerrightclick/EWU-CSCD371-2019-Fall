@@ -9,21 +9,21 @@ namespace Assignment
 
     public class SampleData : ISampleData
     {
-        
+
         public string PeopleFilePath { get; set; } = "People.csv";
 
 
-        public HeaderIndexes _HeaderIndexes;
+        public HeaderIndexes HeaderIndexes { get; private set; }
 
         public SampleData(string filePath)
         {
             PeopleFilePath = filePath;
-            _HeaderIndexes = new HeaderIndexes(filePath);
+            HeaderIndexes = new HeaderIndexes(filePath);
         }
 
         public SampleData()
         {
-            _HeaderIndexes = new HeaderIndexes(PeopleFilePath);
+            HeaderIndexes = new HeaderIndexes(PeopleFilePath);
         }
 
         // 1.
@@ -39,19 +39,16 @@ namespace Assignment
                 return lines;
             }
         }
-       
+
         // 2.
         public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows()
         {
             IEnumerable<string> distinctStates = CsvRows.Select(item =>
             {
-                return item.Split(',')[_HeaderIndexes.State];
+                return item.Split(',')[HeaderIndexes.State];
 
 
             }).Distinct().OrderBy(item => item);
-
-            //IEnumerable<string> distinctStates = from item in CsvRows where item.Split(',')[Headers.IndexOf("State")] select  ;
-
 
             return distinctStates;
         }
@@ -79,20 +76,20 @@ namespace Assignment
                     return new Person()
                     {
 
-                        FirstName = columns[_HeaderIndexes.FirstName],
-                        LastName = columns[_HeaderIndexes.LastName],
-                        EmailAddress = columns[_HeaderIndexes.Email],
+                        FirstName = columns[HeaderIndexes.FirstName],
+                        LastName = columns[HeaderIndexes.LastName],
+                        EmailAddress = columns[HeaderIndexes.Email],
 
                         Address = new Address
                         {
-                            StreetAddress = columns[_HeaderIndexes.StreetAddress],
-                            City = columns[_HeaderIndexes.City],
-                            State = columns[_HeaderIndexes.State],
-                            Zip = columns[_HeaderIndexes.Zip],
+                            StreetAddress = columns[HeaderIndexes.StreetAddress],
+                            City = columns[HeaderIndexes.City],
+                            State = columns[HeaderIndexes.State],
+                            Zip = columns[HeaderIndexes.Zip],
                         }
                     };
                 }).OrderBy(item => item.LastName);
-             
+
                 return peopleQuery;
             }
 
@@ -100,11 +97,25 @@ namespace Assignment
 
         // 5.
         public IEnumerable<(string FirstName, string LastName)> FilterByEmailAddress(
-            Predicate<string> filter) => throw new NotImplementedException();
+            Predicate<string> filter) {
+
+            var result = People.Where(item => filter(item.EmailAddress)).Select(item => (item.FirstName,item.LastName));
+
+            return result;
+        
+        }
 
         // 6.
         public string GetAggregateListOfStatesGivenPeopleCollection(
-            IEnumerable<IPerson> people) => throw new NotImplementedException();
+            IEnumerable<IPerson> people)
+        {
+
+            IEnumerable<string> distinctStateQuery = people.Select(item => item.Address.State).Distinct().OrderBy(item=>item);
+            //okay to use this aggregate override as the first item should always be included
+            string result = distinctStateQuery.Aggregate((states, nextState) => states + ($",{nextState}"));
+
+            return result;
+        }
 
         public IEnumerable<IPerson> GroupByState()
         {
