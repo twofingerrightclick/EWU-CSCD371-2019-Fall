@@ -114,7 +114,7 @@ namespace Assignment
 
 
             IEnumerable<IGrouping<string, IPerson>> query =
-                from person in people
+                from person in people orderby person.Address.State
                 group person by person.Address.State;
 
             List<IPerson> peopleCollection = new List<IPerson>();

@@ -28,7 +28,6 @@ namespace AggregateTests
             IEnumerable<IPerson> people = sampleData.People;
 
 
-
             foreach (IPerson person in people)
             {
 
