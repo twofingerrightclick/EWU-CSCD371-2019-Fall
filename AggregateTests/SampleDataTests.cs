@@ -159,13 +159,14 @@ namespace Assignment8Tests
 
             SampleData sampleData = new SampleData(_TestFilePath);
 
+            int expectedCount = 3;
             
 
             var uniqueListofStatesQuery = sampleData.GetUniqueSortedListOfStatesGivenCsvRows();
 
             var uniqueListofStatesDistinctQuery = uniqueListofStatesQuery.Distinct();
 
-            Assert.IsTrue(uniqueListofStatesQuery.Count() == uniqueListofStatesDistinctQuery.Count());
+            Assert.IsTrue(uniqueListofStatesQuery.Count() == uniqueListofStatesDistinctQuery.Count() && uniqueListofStatesQuery.Count() == 3);
 
 
         }
