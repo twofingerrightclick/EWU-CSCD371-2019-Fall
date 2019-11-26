@@ -1,11 +1,17 @@
-﻿namespace Assignment
+﻿using System.ComponentModel;
+
+namespace Assignment
 {
 
     public class Address : IAddress
     {
-        public string StreetAddress { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
-        public string Zip { get; set; }
+        [DefaultValue("")]
+        public string StreetAddress { get; set; } = "";
+        [DefaultValue("")]
+        public string City { get; set; } = "";
+        [DefaultValue("")]
+        public string State { get; set; }= "";
+        [DefaultValue("")]
+        public string Zip { get; set; }= "";
     }
 }

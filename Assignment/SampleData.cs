@@ -97,12 +97,13 @@ namespace Assignment
 
         // 5.
         public IEnumerable<(string FirstName, string LastName)> FilterByEmailAddress(
-            Predicate<string> filter) {
+            Predicate<string> filter)
+        {
 
-            var result = People.Where(item => filter(item.EmailAddress)).Select(item => (item.FirstName,item.LastName));
+            var result = People.Where(item => filter(item.EmailAddress)).Select(item => (item.FirstName, item.LastName));
 
             return result;
-        
+
         }
 
         // 6.
@@ -110,7 +111,7 @@ namespace Assignment
             IEnumerable<IPerson> people)
         {
 
-            IEnumerable<string> distinctStateQuery = people.Select(item => item.Address.State).Distinct().OrderBy(item=>item);
+            IEnumerable<string> distinctStateQuery = people.Select(item => item.Address.State).Distinct().OrderBy(item => item);
             //okay to use this aggregate override as the first item should always be included
             string result = distinctStateQuery.Aggregate((states, nextState) => states + ($",{nextState}"));
 
@@ -125,7 +126,8 @@ namespace Assignment
 
 
             IEnumerable<IGrouping<string, IPerson>> query =
-                from person in people orderby person.Address.State
+                from person in people
+                orderby person.Address.State
                 group person by person.Address.State;
 
             List<IPerson> peopleCollection = new List<IPerson>();
@@ -163,27 +165,40 @@ namespace Assignment
 
         public HeaderIndexes(string peopleFilePath)
         {
-            string headerLine;
+            string? headerLine;
 
 
-           
 
-            using StreamReader file = new StreamReader(peopleFilePath);
-            headerLine = file.ReadLine();
-            file.Close();
+            if (File.Exists(peopleFilePath))
+            {
+                using StreamReader file = new StreamReader(peopleFilePath);
+                headerLine = file.ReadLine();
+                file.Close();
 
-            List<string> headerIndexes = headerLine.Split(',').ToList();
+                if (headerLine != null)
+                {
 
-            Id = headerIndexes.IndexOf("Id");
-            FirstName = headerIndexes.IndexOf("FirstName");
-            LastName = headerIndexes.IndexOf("LastName");
-            Email = headerIndexes.IndexOf("Email");
-            StreetAddress = headerIndexes.IndexOf("StreetAddress");
-            City = headerIndexes.IndexOf("City");
-            State = headerIndexes.IndexOf("State");
-            Zip = headerIndexes.IndexOf("Zip");
+                    List<string> headerIndexes = headerLine.Split(',').ToList();
 
+                    Id = headerIndexes.IndexOf("Id");
+                    FirstName = headerIndexes.IndexOf("FirstName");
+                    LastName = headerIndexes.IndexOf("LastName");
+                    Email = headerIndexes.IndexOf("Email");
+                    StreetAddress = headerIndexes.IndexOf("StreetAddress");
+                    City = headerIndexes.IndexOf("City");
+                    State = headerIndexes.IndexOf("State");
+                    Zip = headerIndexes.IndexOf("Zip");
+                }
+                else
+                {
+                    throw new ArgumentNullException($"{nameof(headerLine)} was null");
+                }
 
+            }
+            else
+            {
+                throw new FileNotFoundException($"{peopleFilePath} was not found");
+            }
 
 
         }

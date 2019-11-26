@@ -36,7 +36,7 @@ namespace AggregateTests
                 //done this way to practice with linq and reflection
 
                 bool nullsInPersonProperties = personProperties.Where(propertyInfo => {  return propertyInfo.PropertyType == typeof(string); })
-                .Select(propertyInfo => { return (value:(string)propertyInfo.GetValue(person), propertyInfo); })
+                .Select(propertyInfo => { return (value:(string)propertyInfo.GetValue(person)!, propertyInfo); })
                 .Any((valueAndProperty) =>
                 {
                     //not concerned about empty string values here.
@@ -106,10 +106,10 @@ namespace AggregateTests
             SampleData sampleData = new SampleData(_TestFilePath);
 
             IEnumerable<string> people = sampleData.CsvRows;
-
+            //kind of a bad test as it uses the same code as the method being tested does. thinking of another way to test...
             IEnumerable<string> expectedData = File.ReadAllLines(_TestFilePath).Skip(1);
-           
-         
+
+
             bool contentsMatch = Enumerable.SequenceEqual<string>(expectedData, people);
 
             Assert.IsTrue(contentsMatch);
