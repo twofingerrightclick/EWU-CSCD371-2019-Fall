@@ -107,15 +107,12 @@ namespace Assignment8Tests
 
             IEnumerable<string> people = sampleData.CsvRows;
 
-            int count = 0;
-            foreach (var item in people)
-            {
-                count++;
-            }
+            IEnumerable<string> expectedData = File.ReadAllLines(_TestFilePath).Skip(1);
+           
+         
+            bool contentsMatch = Enumerable.SequenceEqual<string>(expectedData, people);
 
-
-
-            Assert.IsTrue(count == File.ReadAllLines(_TestFilePath).Length - 1);
+            Assert.IsTrue(contentsMatch);
 
 
         }
@@ -132,26 +129,15 @@ namespace Assignment8Tests
 
             hardCodedStatesFromTestCSV.Sort();
 
-            IEnumerable<string> states = sampleData.GetUniqueSortedListOfStatesGivenCsvRows();
-            List<string> orderedStates = new List<string>();
+            IEnumerable<string> distinctStateQuery = sampleData.GetUniqueSortedListOfStatesGivenCsvRows();
 
-            foreach (var item in states)
-            {
-                orderedStates.Add(item);
-                Console.WriteLine(item);
-            }
+            bool contentsMatch = Enumerable.SequenceEqual<string>(distinctStateQuery, hardCodedStatesFromTestCSV);
 
-
-            for (int i = 0; i < hardCodedStatesFromTestCSV.Count; i++)
-            {
-                Assert.IsTrue(hardCodedStatesFromTestCSV[i] == orderedStates[i]);
-
-            }
-
+            Assert.IsTrue(contentsMatch);
 
         }
 
-      
+
 
         [TestMethod]
         public void Gets_DistinctList_Of_States_Using_Linq_To_Verify()
@@ -160,13 +146,12 @@ namespace Assignment8Tests
             SampleData sampleData = new SampleData(_TestFilePath);
 
             int expectedCount = 3;
-            
 
             var uniqueListofStatesQuery = sampleData.GetUniqueSortedListOfStatesGivenCsvRows();
 
             var uniqueListofStatesDistinctQuery = uniqueListofStatesQuery.Distinct();
 
-            Assert.IsTrue(uniqueListofStatesQuery.Count() == uniqueListofStatesDistinctQuery.Count() && uniqueListofStatesQuery.Count() == 3);
+            Assert.IsTrue(uniqueListofStatesQuery.Count() == uniqueListofStatesDistinctQuery.Count() && uniqueListofStatesQuery.Count() == expectedCount);
 
 
         }
