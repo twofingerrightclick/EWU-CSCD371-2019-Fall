@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace Assignment8Tests
+namespace AggregateTests
 {
     [TestClass]
     public class SampleDataTests
@@ -75,7 +75,7 @@ namespace Assignment8Tests
                 IEnumerable<PropertyInfo> personAddressProperties = person.Address.GetType().GetProperties();
 
                 bool nullsInPersonAddressProperties = personAddressProperties.Where(propertyInfo => propertyInfo.PropertyType == typeof(string))
-                .Select(propertyInfo => { return (value:(string)propertyInfo.GetValue(person.Address), propertyInfo); })
+                .Select(propertyInfo => { return (value:(string)propertyInfo.GetValue(person.Address)!, propertyInfo); })
                 .Any((valueAndProperty) =>
                 {
                     if (string.IsNullOrEmpty(valueAndProperty.value))
