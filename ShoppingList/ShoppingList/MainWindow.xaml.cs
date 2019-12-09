@@ -10,6 +10,12 @@ namespace ShoppingList
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = new ShoppingListMainWindowViewModel();
+            InitializeComponent();
         }
     }
 }
+
+
+
