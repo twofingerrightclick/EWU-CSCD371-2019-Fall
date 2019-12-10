@@ -63,6 +63,37 @@ namespace ShoppingList.Tests
         }
 
 
+        /* var timeAdded = DateTime.Now;
+         SelectedShoppingItem!.TimeWhenAdded = timeAdded;
+             SelectedShoppingItem = null;
+
+
+             CanExecute = true;
+             EditItemCommand.RaiseCanExecuteChanged();*/
+
+        [TestMethod]
+        public void EditItemCommand_Executes_ChangingItemName_Changes_TiemWhenAdded_And_Sets_SelectedItem_To_Null()
+        {
+            var shoppingItemtoEdit = new ShoppingItem() { Name = "Apple", TimeWhenAdded = DateTime.Now.AddDays(-1) };
+       
+
+            var viewModel = new ShoppingListMainWindowViewModel();
+
+            viewModel.ShoppingListItems.Add(shoppingItemtoEdit);
+
+            viewModel.SelectedShoppingItem = viewModel.ShoppingListItems[0];
+            string newItemName = "Banana";
+            viewModel.SelectedShoppingItem.Name = newItemName;
+            viewModel.EditItemCommand.Execute(null);
+
+
+
+            Assert.AreEqual<string>(newItemName,viewModel.ShoppingListItems[0].Name);
+            Assert.AreEqual<string>(viewModel.ShoppingListItems[0].TimeWhenAdded.ToShortDateString(), DateTime.Now.ToShortDateString());
+            Assert.IsTrue(viewModel.SelectedShoppingItem == null);
+
+        }
+
 
     }
 }
