@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace ShoppingList
 {
-    class ShoppingListMainWindowViewModel : ViewModelBase
+    public class ShoppingListMainWindowViewModel : ViewModelBase
     {
 
         public string Title { get;} = "Shopping List";
