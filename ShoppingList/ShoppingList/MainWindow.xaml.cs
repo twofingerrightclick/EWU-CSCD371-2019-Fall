@@ -18,14 +18,13 @@ namespace ShoppingList
 
         private void TextBoxGotFocus(object sender, RoutedEventArgs e)
         {
-            (sender as TextBox).SelectAll();
+            if (sender != null)
+            {
+                (sender as TextBox)!.SelectAll();
+            }
         }
 
-        private void ResetEntryTextBox(object sender, RoutedEventArgs e)
-        {
-           
-            (sender as TextBox).Text="Enter Item...";
-        }
+       
 
        
     }

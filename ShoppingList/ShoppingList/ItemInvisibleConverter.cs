@@ -11,7 +11,7 @@ namespace ShoppingList
 
     {
 
-        public object Convert(object value, Type targetType = null, object parameter = null, CultureInfo culture = null)
+        public object Convert(object value, Type targetType , object parameter, CultureInfo culture)
         {
             if (value is ShoppingItem && value!=null)
             {
@@ -23,8 +23,10 @@ namespace ShoppingList
             }
         }
 
-        public object ConvertBack(object? value, Type? targetType = null, object? parameter = null, CultureInfo? culture = null) =>
+        public object ConvertBack(object? value, Type targetType, object parameter, CultureInfo culture)
+        {
             throw new InvalidOperationException();
+        }
 
 
 

@@ -6,7 +6,7 @@ namespace ShoppingList
 {
     class ShoppingItem
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = "";
         public DateTime TimeWhenAdded { get; set; }
     }
 }

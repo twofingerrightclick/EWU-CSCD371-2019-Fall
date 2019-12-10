@@ -5,9 +5,9 @@ using System.Windows.Input;
 
 namespace ShoppingList
 {
-    public class Command : ICommand
+    /*public class Command : ICommand
     {
-        private Action Method { get; }
+       *//* private Action Method { get; }
 
         public Command(Action method)
         {
@@ -21,6 +21,6 @@ namespace ShoppingList
 
         public void Execute(object parameter) => Method?.Invoke();
 
-        public event EventHandler CanExecuteChanged;
-    }
+        public event EventHandler CanExecuteChanged;*//*
+    }*/
 }

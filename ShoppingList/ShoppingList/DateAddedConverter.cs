@@ -8,7 +8,7 @@ namespace ShoppingList
 {
     class DateAddedConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType=null, object parameter=null, CultureInfo culture=null)
+        public object Convert(object value, Type? targetType=null, object? parameter=null, CultureInfo? culture=null)
         {
             if (value is ShoppingItem)
             {

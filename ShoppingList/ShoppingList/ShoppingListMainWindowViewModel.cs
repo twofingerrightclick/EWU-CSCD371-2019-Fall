@@ -22,8 +22,8 @@ namespace ShoppingList
 
        
 
-        private ShoppingItem _SelectedShoppingItem;
-        public ShoppingItem SelectedShoppingItem
+        private ShoppingItem? _SelectedShoppingItem;
+        public ShoppingItem? SelectedShoppingItem
         {
             get => _SelectedShoppingItem;
             set { Set(ref _SelectedShoppingItem, value);
@@ -54,7 +54,7 @@ namespace ShoppingList
 
         private void OnDeleteItem()
         {
-            ShoppingListItems.Remove(SelectedShoppingItem);
+            ShoppingListItems.Remove(SelectedShoppingItem!);
             CanExecute = true;
             AddItemCommand.RaiseCanExecuteChanged();
         }
@@ -75,7 +75,7 @@ namespace ShoppingList
         private void OnEditItem()
         {
             var timeAdded = DateTime.Now;
-            SelectedShoppingItem.TimeWhenAdded = timeAdded;
+            SelectedShoppingItem!.TimeWhenAdded = timeAdded;
             SelectedShoppingItem = null;
 
 
