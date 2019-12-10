@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace ShoppingList
 {
@@ -14,6 +15,19 @@ namespace ShoppingList
             DataContext = new ShoppingListMainWindowViewModel();
             InitializeComponent();
         }
+
+        private void TextBoxGotFocus(object sender, RoutedEventArgs e)
+        {
+            (sender as TextBox).SelectAll();
+        }
+
+        private void ResetEntryTextBox(object sender, RoutedEventArgs e)
+        {
+           
+            (sender as TextBox).Text="Enter Item...";
+        }
+
+       
     }
 }
 

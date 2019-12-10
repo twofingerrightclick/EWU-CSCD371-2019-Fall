@@ -3,6 +3,8 @@ using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace ShoppingList
@@ -10,35 +12,46 @@ namespace ShoppingList
     class ShoppingListMainWindowViewModel : ViewModelBase
     {
 
+        public string Title { get;} = "Shopping List";
 
-        private string _Text;
-        public string Text
-        {
-            get => _Text;
-            set => Set(ref _Text, value);
-        }
+        public string NewEntryText { get; set; } = "Enter new item...";
+
+       
 
         private ShoppingItem _SelectedShoppingItem;
         public ShoppingItem SelectedShoppingItem
         {
             get => _SelectedShoppingItem;
-            set => Set(ref _SelectedShoppingItem, value);
-        }
+            set { Set(ref _SelectedShoppingItem, value);
+                RaisePropertyChanged();
+            }
+        } 
 
         public ObservableCollection<ShoppingItem> ShoppingListItems { get; } = new ObservableCollection<ShoppingItem>();
 
-        public RelayCommand ChangeNameCommand { get; }
+        
 
-        public ICommand AddPersonCommand { get; }
-        private Func<DateTime> GetNow { get; }
+       
+        
 
         private bool CanExecute { get; set; }
 
+        public RelayCommand AddItemCommand { get; }
+        public RelayCommand EditEntryCommand { get; }
+        public RelayCommand DeleteEntryCommand { get; }
+
         public ShoppingListMainWindowViewModel()
         {
-            Text = "Shopping List";
-            ChangeNameCommand = new RelayCommand(OnChangeName, () => CanExecute);
-            AddPersonCommand = new RelayCommand(OnAddPerson);
+            
+            //ChangeNameCommand = new RelayCommand(OnChangeName, () => CanExecute);
+            AddItemCommand = new RelayCommand(OnAddItem);
+            EditEntryCommand = new RelayCommand(OnEditItem);
+
+            DeleteEntryCommand = new RelayCommand(OnDeleteItem);
+
+            
+
+
 
            /* var dob = getNow().Subtract(TimeSpan.FromDays(30 * 365));*/
 
@@ -49,18 +62,40 @@ namespace ShoppingList
             GetNow = getNow ?? throw new ArgumentNullException(nameof(getNow));*/
         }
 
-        private void OnAddPerson()
+        private void OnDeleteItem()
         {
-            var timeAdded = DateTime.Now;
-            ShoppingListItems.Add(new ShoppingItem { Name="blah", TimeWhenAdded=timeAdded});
+            ShoppingListItems.Remove(SelectedShoppingItem);
             CanExecute = true;
-            ChangeNameCommand.RaiseCanExecuteChanged();
+            AddItemCommand.RaiseCanExecuteChanged();
         }
 
-        private void OnChangeName()
+        private void OnAddItem()
         {
-            Text = "Kevin";
+            var timeAdded = DateTime.Now;
+            ShoppingListItems.Add(new ShoppingItem { Name= NewEntryText, TimeWhenAdded=timeAdded});
+            
+            
+            CanExecute = true;
+            AddItemCommand.RaiseCanExecuteChanged();
+            
+            NewEntryText = "Enter new item..."; 
         }
+
+        private void OnEditItem()
+        {
+            var timeAdded = DateTime.Now;
+            SelectedShoppingItem.TimeWhenAdded = timeAdded;
+            SelectedShoppingItem = null;
+
+
+            CanExecute = true;
+            EditEntryCommand.RaiseCanExecuteChanged();
+
+        }
+
+
+
+
 
     }
 }

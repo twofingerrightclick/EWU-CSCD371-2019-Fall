@@ -5,8 +5,85 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShoppingList"
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ShoppingListMainWindowViewModel}"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+
+    <Window.Resources>
+
+        <local:DateAddedConverter x:Key="DateAddedConverter" />
+        <local:ItemInvisibleConverter x:Key="ItemInvisibleConverter"/>
+
+
+        <DataTemplate DataType="{x:Type local:ShoppingItem}" x:Key="ShoppingItemTemplate">
+            <StackPanel>
+                <TextBlock >
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0} Added: {1}">
+                            <Binding Path="Name" />
+                            <Binding Converter="{StaticResource DateAddedConverter}" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+
+                </TextBlock>
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
+
+
+
+
+
+    <Grid Background="BlueViolet">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="28"/>
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="{Binding Title}"
+                  Grid.Row="0" Grid.ColumnSpan="2"  TextAlignment="Center" Background="PapayaWhip" />
+
+
+        <StackPanel  Grid.Row="1" Grid.Column="1" >
+
+
+
+            <TextBox x:Name="NewEntryTextBox" Text="{Binding NewEntryText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" GotMouseCapture="TextBoxGotFocus"   >
+                
+ 
+                
+            </TextBox>
+
+            <!--<DockPanel Visibility="{Binding SelectedItem, Converter={StaticResource ItemInvisibleConverter}}"
+                   Grid.Row="2" Grid.Column="1"
+                   Grid.ColumnSpan="2">
+                <TextBlock Text="Name:" Margin="10,5,10,5"/>
+                <TextBox Text="{Binding SelectedItem.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+            </DockPanel>-->
+
+
+            <ToggleButton Content="Add New Entry"  HorizontalAlignment="Center" Command="{Binding AddItemCommand}" />
+
+            <StackPanel  Grid.Column="2" Grid.Row="1" Visibility="{Binding SelectedShoppingItem, Converter={StaticResource ItemInvisibleConverter}}" >
+            <TextBlock Text="Edit Selected Item:"  />
+            <TextBox Text="{Binding SelectedShoppingItem.Name,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+            <ToggleButton Content="Save Entry"  HorizontalAlignment="Center" Command="{Binding EditEntryCommand}" />
+                <ToggleButton Content="Delete Entry"  HorizontalAlignment="Right" Command="{Binding DeleteEntryCommand}" />
+            </StackPanel> 
+        </StackPanel>
+
+
+
+        <ListBox ItemsSource="{Binding ShoppingListItems}" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" x:Name="ShoppingListItems"
+                 SelectedItem="{Binding SelectedShoppingItem}" ItemTemplate="{StaticResource ShoppingItemTemplate}" />
+
+
+       
 
     </Grid>
 </Window>

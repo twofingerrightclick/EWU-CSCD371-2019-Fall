@@ -18,7 +18,7 @@ namespace ShoppingList
             }
             else
             {
-                return null;
+                return "hello world!";
             }
 
         }
