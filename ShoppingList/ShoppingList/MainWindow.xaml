@@ -59,12 +59,7 @@
                 
             </TextBox>
 
-            <!--<DockPanel Visibility="{Binding SelectedItem, Converter={StaticResource ItemInvisibleConverter}}"
-                   Grid.Row="2" Grid.Column="1"
-                   Grid.ColumnSpan="2">
-                <TextBlock Text="Name:" Margin="10,5,10,5"/>
-                <TextBox Text="{Binding SelectedItem.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-            </DockPanel>-->
+
 
 
             <ToggleButton Content="Add New Entry"  HorizontalAlignment="Center" Command="{Binding AddItemCommand}" />

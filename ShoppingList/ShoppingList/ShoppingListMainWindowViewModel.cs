@@ -14,7 +14,11 @@ namespace ShoppingList
 
         public string Title { get;} = "Shopping List";
 
-        public string NewEntryText { get; set; } = "Enter new item...";
+        private string _NewEntryText = "Enter item...";
+        public string NewEntryText { get => _NewEntryText; set{Set(ref _NewEntryText, value);
+                RaisePropertyChanged();
+    }
+}
 
        
 
@@ -29,10 +33,7 @@ namespace ShoppingList
 
         public ObservableCollection<ShoppingItem> ShoppingListItems { get; } = new ObservableCollection<ShoppingItem>();
 
-        
-
-       
-        
+  
 
         private bool CanExecute { get; set; }
 
@@ -42,24 +43,13 @@ namespace ShoppingList
 
         public ShoppingListMainWindowViewModel()
         {
-            
-            //ChangeNameCommand = new RelayCommand(OnChangeName, () => CanExecute);
+          
             AddItemCommand = new RelayCommand(OnAddItem);
             EditEntryCommand = new RelayCommand(OnEditItem);
 
             DeleteEntryCommand = new RelayCommand(OnDeleteItem);
 
-            
 
-
-
-           /* var dob = getNow().Subtract(TimeSpan.FromDays(30 * 365));*/
-
-           /* People.Add(new Person("Kevin", "Bost", dob));
-            People.Add(new Person("Mark", "Mc", dob));
-
-            SelectedPerson = People.First();
-            GetNow = getNow ?? throw new ArgumentNullException(nameof(getNow));*/
         }
 
         private void OnDeleteItem()
@@ -73,12 +63,13 @@ namespace ShoppingList
         {
             var timeAdded = DateTime.Now;
             ShoppingListItems.Add(new ShoppingItem { Name= NewEntryText, TimeWhenAdded=timeAdded});
-            
-            
+
+            NewEntryText = "Enter new item...";
+
             CanExecute = true;
             AddItemCommand.RaiseCanExecuteChanged();
             
-            NewEntryText = "Enter new item..."; 
+           
         }
 
         private void OnEditItem()
