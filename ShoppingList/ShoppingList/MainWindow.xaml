@@ -15,7 +15,7 @@
     <Window.Resources>
 
         <local:DateAddedConverter x:Key="DateAddedConverter" />
-        <local:ItemInvisibleConverter x:Key="ItemInvisibleConverter"/>
+        <local:ShoppingItemInvisibleConverter x:Key="ItemInvisibleConverter"/>
 
 
         <DataTemplate DataType="{x:Type local:ShoppingItem}" x:Key="ShoppingItemTemplate">

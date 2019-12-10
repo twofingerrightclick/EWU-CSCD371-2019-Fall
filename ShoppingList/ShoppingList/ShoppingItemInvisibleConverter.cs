@@ -7,11 +7,11 @@ using System.Windows.Markup;
 
 namespace ShoppingList
 {
-    public class ItemInvisibleConverter : BaseConverter, IValueConverter
+    public class ShoppingItemInvisibleConverter : BaseConverter, IValueConverter
 
     {
 
-        public object Convert(object value, Type targetType , object parameter, CultureInfo culture)
+        public object Convert(object value, Type? targetType =null , object? parameter = null, CultureInfo? culture = null)
         {
             if (value is ShoppingItem && value!=null)
             {
