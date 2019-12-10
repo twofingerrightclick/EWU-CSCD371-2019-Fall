@@ -33,7 +33,7 @@
 
 
 
-    <Grid Background="BlueViolet">
+    <Grid Background="PaleTurquoise">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
