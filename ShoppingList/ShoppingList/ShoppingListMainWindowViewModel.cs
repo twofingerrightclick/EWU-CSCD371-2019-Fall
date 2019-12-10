@@ -38,16 +38,16 @@ namespace ShoppingList
         private bool CanExecute { get; set; }
 
         public RelayCommand AddItemCommand { get; }
-        public RelayCommand EditEntryCommand { get; }
-        public RelayCommand DeleteEntryCommand { get; }
+        public RelayCommand EditItemCommand { get; }
+        public RelayCommand DeleteItemCommand { get; }
 
         public ShoppingListMainWindowViewModel()
         {
           
             AddItemCommand = new RelayCommand(OnAddItem);
-            EditEntryCommand = new RelayCommand(OnEditItem);
+            EditItemCommand = new RelayCommand(OnEditItem);
 
-            DeleteEntryCommand = new RelayCommand(OnDeleteItem);
+            DeleteItemCommand = new RelayCommand(OnDeleteItem);
 
 
         }
@@ -55,8 +55,10 @@ namespace ShoppingList
         private void OnDeleteItem()
         {
             ShoppingListItems.Remove(SelectedShoppingItem!);
+            SelectedShoppingItem = null;
             CanExecute = true;
             AddItemCommand.RaiseCanExecuteChanged();
+            
         }
 
         private void OnAddItem()
@@ -80,7 +82,7 @@ namespace ShoppingList
 
 
             CanExecute = true;
-            EditEntryCommand.RaiseCanExecuteChanged();
+            EditItemCommand.RaiseCanExecuteChanged();
 
         }
 
