@@ -66,7 +66,7 @@ namespace ShoppingList
             var timeAdded = DateTime.Now;
             ShoppingListItems.Add(new ShoppingItem { Name= NewEntryText, TimeWhenAdded=timeAdded});
 
-            NewEntryText = "Enter new item...";
+            NewEntryText = "";
 
             CanExecute = true;
             AddItemCommand.RaiseCanExecuteChanged();

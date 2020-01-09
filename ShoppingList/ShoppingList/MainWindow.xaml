@@ -10,7 +10,7 @@
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         
-        Title="MainWindow" Height="450" Width="800">
+        Title="MVVM Shopping List" Height="450" Width="800" Foreground="White">
 
     <Window.Resources>
 
@@ -56,12 +56,11 @@
         <StackPanel  Grid.Row="1" Grid.Column="1" >
 
 
-
             <TextBox x:Name="NewEntryTextBox" Text="{Binding NewEntryText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" GotMouseCapture="TextBoxGotFocus" FontSize="16" Margin="8,0,6,0"   >
-
+                <TextBox.InputBindings>
+                    <KeyBinding Key="Enter" Command="{Binding AddItemCommand}"/>
+                </TextBox.InputBindings>
             </TextBox>
-
-
 
 
             <Button Content="Add New Entry"  HorizontalAlignment="Center" Command="{Binding AddItemCommand}" Margin="0,5,0,5" Foreground="White" />
